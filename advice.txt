@@ -1,0 +1,19 @@
+formik -> to store form data in react and do validation withought loosing all the data 
+apollo graphql over rest api -> to make api requests
+unstated or react context api -> to pass data between components instead of redux
+
+apolloy||relay if you use graphql
+react-query || SWR if you use rest
+
+
+One benefit that SSR can bring to apps that would otherwise be CSR is slightly better initial load experience.
+
+Imagine you have an app where on the initial page load you have to do a check to see if the user is authenticated so that you can decide whether to show a button to log in or log out.
+
+If we use CSR then we will either need to show the incorrect state or a loading state whilst we do the check, and then we can correct it once we know if the user is authenticated.
+
+If we use SSR we can do that check on the server before the page is rendered, and guarantee to display the correct state on the initial render.
+
+In terms of SSG vs SSR, in general I think you may prefer SSR in the case where the data changes frequently and it is important for users to see updates to that data straight away.
+
+In your case, if you do not mind that users do not see the updates right away then SSG is fine, and you can always use something like SWR on the client side to periodically fetch updates.
