@@ -5,9 +5,6 @@
 // These styles apply to every route in the application
 import "../styles/globals.css";
 
-//components
-import SideBar from "../components/SideBar";
-
 export default function RootLayout({
   children,
 }: {
@@ -16,7 +13,6 @@ export default function RootLayout({
   return (
     <html>
       <head />
-      {/* <SideBar /> */}
       <body>{children}</body>
     </html>
   );

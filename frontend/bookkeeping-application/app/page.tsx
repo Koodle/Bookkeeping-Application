@@ -1,12 +1,21 @@
+//components
+import SideBar from "../components/SideBar";
+import PieChart from "../components/dashboard/DonutChart";
+
 export default function HomePage() {
   return (
     <div>
-      <h1>Home Page</h1>
-      <p>Some content</p>
-      <h1 className="text-3xl font-bold underline text-green-600">
-        Hello, Next.js!
-      </h1>
-      <h1>asd</h1>
+      <div className="bg-primary h-14 ml-44"></div>
+      <div className="flex">
+        <SideBar />
+      </div>
+      <div className="bg-slate-400 ml-44 h-screen">
+        <div className="grid grid-cols-3">
+          <PieChart />
+          <div>hi</div>
+          <div>hi</div>
+        </div>
+      </div>
     </div>
   );
 }
