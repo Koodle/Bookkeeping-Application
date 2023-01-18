@@ -20,9 +20,12 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
-        <div className="bg-black h-14 ml-44 flex items-center text-white ">
-          <p>Company Name LTD</p>
+      <div className="bg-slate-100 h-screen">
+        <div className="bg-white h-14 ml-44 text-black flex justify-between items-center">
+          <p className="pl-4">Company Name LTD</p>
+          <p className="ml-auto">Today</p>
+          <p className="px-2">Month</p>
+          <p className="pr-4">Year</p>
         </div>
         <div className="flex">
           <SideBar />
@@ -30,23 +33,27 @@ export default function Home() {
 
         <div className="ml-44 mt-4">
           <div className="grid grid-cols-3 ml-3 mr-3">
-            <div className=" bg-slate-100 h-60 shadow-lg">
-              <p className="text-center pb-4 font-semibold">Account Balances</p>
+            <div className="bg-white h-60 shadow-sm rounded-lg">
+              <p className="text-center pb-4 pt-2 font-semibold">
+                Account Balances
+              </p>
               <DonutChart />
             </div>
-            <div className="bg-slate-100 h-60 ml-6 shadow-lg">
-              <p className="text-center pb-4 font-semibold">
+            <div className="bg-white h-60 ml-6 shadow-sm rounded-lg">
+              <p className="text-center pb-4 pt-2 font-semibold">
                 Total Money In & Out
               </p>
               <BarChart />
             </div>
-            <div className="bg-slate-100 h-60 ml-6 shadow-lg">
-              <p className="text-center pb-4 font-semibold">Bank Balance</p>
+            <div className="bg-white h-60 ml-6 shadow-sm rounded-lg">
+              <p className="text-center pb-4 pt-2 font-semibold">
+                Bank Balance
+              </p>
               <LineChart />
             </div>
           </div>
 
-          <div className="text-center">
+          <div className="">
             <TransactonsTable />
           </div>
         </div>
