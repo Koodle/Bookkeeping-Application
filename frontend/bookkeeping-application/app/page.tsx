@@ -1,6 +1,6 @@
 //components
-import SideBar from "../components/SideBar";
-import PieChart from "../components/dashboard/DonutChart";
+import SideBar from "../components/Layout/SideBar";
+import PieChart from "../components/Dashboard/DonutChart";
 
 export default function HomePage() {
   return (

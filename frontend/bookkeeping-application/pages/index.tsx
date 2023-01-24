@@ -3,11 +3,11 @@ import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "../styles/Home.module.css";
 //components
-import SideBar from "../components/SideBar";
-import DonutChart from "../components/dashboard/DonutChart";
-import TransactonsTable from "../components/dashboard/TransactionsTable";
-import BarChart from "../components/dashboard/BarChart";
-import { LineChart } from "../components/dashboard/LineChart";
+import SideBar from "../components/Layout/SideBar";
+import DonutChart from "../components/Dashboard/DonutChart";
+import TransactonsTable from "../components/Dashboard/TransactionsTable";
+import BarChart from "../components/Dashboard/BarChart";
+import { LineChart } from "../components/Dashboard/LineChart";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +22,7 @@ export default function Home() {
       </Head>
       <div className="bg-slate-100 h-screen">
         <div className="bg-white h-14 ml-44 text-black flex justify-between items-center">
-          <p className="pl-4">Company Name LTD</p>
+          <p className="pl-4 font-semibold">Company Name LTD</p>
           <p className="ml-auto">Today</p>
           <p className="px-2">Month</p>
           <p className="pr-4">Year</p>
@@ -34,21 +34,15 @@ export default function Home() {
         <div className="ml-44 mt-4">
           <div className="grid grid-cols-3 ml-3 mr-3">
             <div className="bg-white h-60 shadow-sm rounded-lg">
-              <p className="text-center pb-4 pt-2 font-semibold">
-                Account Balances
-              </p>
+              <p className="text-center pb-4 pt-2">Account Balances</p>
               <DonutChart />
             </div>
             <div className="bg-white h-60 ml-6 shadow-sm rounded-lg">
-              <p className="text-center pb-4 pt-2 font-semibold">
-                Total Money In & Out
-              </p>
+              <p className="text-center pb-4 pt-2">Total Money In & Out</p>
               <BarChart />
             </div>
             <div className="bg-white h-60 ml-6 shadow-sm rounded-lg">
-              <p className="text-center pb-4 pt-2 font-semibold">
-                Bank Balance
-              </p>
+              <p className="text-center pb-4 pt-2">Bank Balance</p>
               <LineChart />
             </div>
           </div>

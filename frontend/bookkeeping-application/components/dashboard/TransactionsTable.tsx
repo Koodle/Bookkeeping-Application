@@ -1,12 +1,12 @@
 export default function TransactonsTable() {
   return (
-    <div className="ml-4 mr-9 mt-10 h-72 bg-white rounded-lg w-auto inline-block shadow-sm">
-      <div>
-        <p className="text-lg font-semibold pt-4 pb-6 pl-4">Transactions</p>
+    <div className=" mt-10 h-96 bg-white rounded-lg w-fit mx-auto shadow-sm">
+      <div className="text-center">
+        <p className="text-lg pt-4 pb-6 pl-4">Transactions</p>
       </div>
-      <table className="table-fixed border text-center">
+      <table className="table-fixed border-none text-center mx-auto">
         <thead>
-          <tr>
+          <tr className="bg-cyan-100">
             <th className="px-2 w-44 border-none font-semibold">Date</th>
             <th className="px-2 w-36 border-none font-semibold">Reference</th>
             <th className="px-2 w-80 border-none font-semibold">Details</th>
@@ -17,14 +17,20 @@ export default function TransactonsTable() {
         </thead>
         <tbody>
           <tr>
-            <td className="px-2 border-2 overflow-hidden text-ellipsis break-words">
+            <td className="px-2 border-l-2 border-r-2 border-b-2 overflow-hidden text-ellipsis break-words">
               31/03/2021
             </td>
-            <td className="px-2 border-2">PIN 1</td>
-            <td className="px-2 border-2">Fuel Expense</td>
-            <td className="px-2 border-2">£20.00</td>
-            <td className="px-2 border-2">4000 - Fuel</td>
-            <td className="px-2 border-2">2000 - Bank</td>
+            <td className="px-2 border-l-2 border-r-2 border-b-2">PIN 1</td>
+            <td className="px-2 border-l-2 border-r-2 border-b-2">
+              Fuel Expense
+            </td>
+            <td className="px-2 border-l-2 border-r-2 border-b-2">£20.00</td>
+            <td className="px-2 border-l-2 border-r-2 border-b-2">
+              4000 - Fuel
+            </td>
+            <td className="px-2 border-l-2 border-r-2 border-b-2">
+              2000 - Bank
+            </td>
           </tr>
         </tbody>
       </table>

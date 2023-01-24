@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// schema.prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            Int      @id @default(autoincrement())
+  fname         String
+  lname         String
+  email         String   @unique
+  password      String
+
+  transactions  Transactions[]
+
+  businessData  BusinessData? //question mark means "optional" 
+
+}
+
+model NominalAccounts {
+  id Int @default(autoincrement())
+  accountName String
+  code Int @id
+  financialStatement String
+  groupName String
+  transactions Transactions[]
+}
+
+model Transactions {
+  id Int @id @default(autoincrement())
+
+  nominalAccounts NominalAccounts @relation(fields: [nominalAccountID], references: [code])  //is for prisma (will not show in db)
+  nominalAccountID Int
+  
+  entryType String
+  transactionDate DateTime @db.Date
+  description String
+  amount Decimal
+
+  user User @relation(fields: [userID], references: [id])
+  userID Int
+}
+
+model BusinessData {
+  id Int @id @default(autoincrement())
+  companyName String
+  address String
+  telephone String
+  currency String
+  financialYearEnd String
+  
+  user User @relation(fields: [userID], references: [id])
+  userID Int @unique
+}
+
+
