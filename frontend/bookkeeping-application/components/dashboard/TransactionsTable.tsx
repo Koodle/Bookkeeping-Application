@@ -1,4 +1,17 @@
-export default function TransactonsTable() {
+// interface transactions {
+//   transactions: string;
+// }
+
+// import { Dispatch, SetStateAction } from "react";
+
+//TODO: change props from "any" to a specific interface
+export default function TransactonsTable(props: any) {
+  //TODO: Filters, Search bar, Links to specific ledger
+
+  console.log("props", props.transactions);
+  //TODO: put this data in the table
+  //1) loop through the transactions array. for each() create html row
+
   return (
     <div className=" mt-10 h-96 bg-white rounded-lg w-fit mx-auto shadow-sm">
       <div className="text-center">
@@ -20,7 +33,7 @@ export default function TransactonsTable() {
             <td className="px-2 border-l-2 border-r-2 border-b-2 overflow-hidden text-ellipsis break-words">
               31/03/2021
             </td>
-            <td className="px-2 border-l-2 border-r-2 border-b-2">PIN 1</td>
+            <td className="px-2 border-l-2 border-r-2 border-b-2">1</td>
             <td className="px-2 border-l-2 border-r-2 border-b-2">
               Fuel Expense
             </td>

@@ -20,7 +20,7 @@ exports.create = async (req, res) => {
     //save new transactions
     async function f() {
       await req.body.data.forEach(async (transaction) => {
-        const createMany = await prisma.transactions.create({
+        const create = await prisma.transactions.create({
           data: {
             nominalAccountID: transaction.nominalAccountID,
             entryType: transaction.entryType,
@@ -30,8 +30,11 @@ exports.create = async (req, res) => {
             userID: req.user.id,
           },
         });
+        console.log(create); //FIXME: update the doubleEntryID field using create object return value. The ids for both newly created transactions will be here.
       });
     }
+
+    //FIXME: Doesn't return the last record in table!
     //return updated transactions
     await f().then(async () => {
       const newTransactions = await prisma.transactions.findMany({

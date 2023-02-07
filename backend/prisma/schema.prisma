@@ -46,15 +46,17 @@ model Transactions {
 
   user User @relation(fields: [userID], references: [id])
   userID Int
+
+  doubleEntryID Int?
 }
 
 model BusinessData {
   id Int @id @default(autoincrement())
-  companyName String
-  address String
-  telephone String
-  currency String
-  financialYearEnd String
+  companyName String?
+  address String?
+  telephone String?
+  currency String?
+  financialYearEnd String?
   
   user User @relation(fields: [userID], references: [id])
   userID Int @unique

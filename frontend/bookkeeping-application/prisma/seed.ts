@@ -1,15 +1,25 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
+const bcrypt = require("bcrypt");
+
 async function main() {
-  const user1 = await prisma.user.create({
-    data: {
+  //Users:
+  const user1 = await prisma.user.upsert({
+    where: { email: "kazim@prisma.io" },
+    update: {},
+    create: {
       email: "kazim@prisma.io",
       fname: "kazim",
       lname: "manji",
+      password: bcrypt.hashSync("password", 10),
     },
   });
-  const businessData1 = await prisma.businessData.create({
-    data: {
+
+  //Business Data:
+  const businessData1 = await prisma.businessData.upsert({
+    where: { userID: 1 },
+    update: {},
+    create: {
       companyName: "Seven Spice Ltd",
       address: "1 Melton Road",
       telephone: "07826353",
@@ -18,9 +28,12 @@ async function main() {
       userID: 1,
     },
   });
+
+  //Nominal accounts:
   const nominalAccounts1 = await prisma.nominalAccounts.createMany({
+    skipDuplicates: true,
     data: [
-      ///P/L accounts
+      //Profit loss accounts
       {
         id: 1,
         accountName: "Retail sales",
@@ -206,13 +219,6 @@ async function main() {
 
       ///Balance sheet accounts
       {
-        id: 27,
-        accountName: "Bank account",
-        code: 1000,
-        financialStatement: "Balance sheet",
-        groupName: "Current assets",
-      },
-      {
         id: 28,
         accountName: "Bank account",
         code: 1000,
@@ -281,6 +287,29 @@ async function main() {
         code: 3000,
         financialStatement: "Balance sheet",
         groupName: "Equity",
+      },
+    ],
+  });
+
+  //TODO:   Transactions:
+  const Transactions1 = await prisma.transactions.createMany({
+    skipDuplicates: true,
+    data: [
+      {
+        nominalAccountID: 1000,
+        entryType: "Debit",
+        transactionDate: new Date("2022-01-01"),
+        description: "£2000 into business account",
+        amount: 2000.0,
+        userID: 1,
+      },
+      {
+        nominalAccountID: 3000,
+        entryType: "Credit",
+        transactionDate: new Date("2022-01-01"),
+        description: "£2000 into business account",
+        amount: 2000.0,
+        userID: 1,
       },
     ],
   });

@@ -9,9 +9,31 @@ import TransactonsTable from "../components/Dashboard/TransactionsTable";
 import BarChart from "../components/Dashboard/BarChart";
 import { LineChart } from "../components/Dashboard/LineChart";
 
-const inter = Inter({ subsets: ["latin"] });
+import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+//API
+import axios from "axios";
+import { useEffect, useState } from "react";
+import AuthService from "../services/authService";
+
+//TODO: get data for year end, get data for charts & table, filter and searching.
+//TODO: improve ui for year end (billy)
 
 export default function Home() {
+  const [transactions, setTransactions] = useState([]);
+
+  useEffect(() => {
+    AuthService.login({
+      //FIXME: get from the login page once built
+      email: "kazim@prisma.io",
+      password: "password",
+    }).then((res) => {
+      console.log(res);
+      setTransactions(res.transactions);
+    });
+  }, []);
+
   return (
     <>
       <Head>
@@ -22,10 +44,11 @@ export default function Home() {
       </Head>
       <div className="bg-slate-100 h-screen">
         <div className="bg-white h-14 ml-44 text-black flex justify-between items-center">
-          <p className="pl-4 font-semibold">Company Name LTD</p>
-          <p className="ml-auto">Today</p>
-          <p className="px-2">Month</p>
-          <p className="pr-4">Year</p>
+          <p className="pl-4 font-semibold">Dashboard</p>
+          {/* <p className="ml-auto">Year End:</p>
+          <input className="pr-4" type="date" value="2017-06-01" /> */}
+          <p className="ml-auto mr-2">Year End:</p>
+          <input type="month" min={"2018-03"} defaultValue={"2018-05"} />
         </div>
         <div className="flex">
           <SideBar />
@@ -48,7 +71,7 @@ export default function Home() {
           </div>
 
           <div className="">
-            <TransactonsTable />
+            <TransactonsTable transactions={transactions} />
           </div>
         </div>
       </div>
