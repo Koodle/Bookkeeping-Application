@@ -21,7 +21,7 @@ import AuthService from "../services/authService";
 //TODO: improve ui for year end (billy)
 
 export default function Home() {
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState<any[]>([]);
 
   useEffect(() => {
     AuthService.login({
@@ -42,7 +42,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="bg-slate-100 h-screen">
+      <div className="bg-slate-100 h-screen scroll-smooth">
         <div className="bg-white h-14 ml-44 text-black flex justify-between items-center">
           <p className="pl-4 font-semibold">Dashboard</p>
           {/* <p className="ml-auto">Year End:</p>

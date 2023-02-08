@@ -12,6 +12,7 @@ import { log } from "console";
 
 export default function Ledgers() {
   const [ledgers, setLedgers] = useState<any[]>([]);
+  const [selectedAccounts, setSelectedAccounts] = useState<any[]>([]);
 
   useEffect(() => {
     AuthService.login({
@@ -30,60 +31,11 @@ export default function Ledgers() {
         <SideBar />
       </div>
 
-      {/* <div className="ml-44 mt-4">
-        <div className="grid grid-cols-3 ml-3 mr-3">
-          <div className="bg-white h-60 shadow-sm rounded-lg">
-            <p className="text-center pb-4 pt-2 font-semibold">asdf</p>
-          </div>
-        </div>
-      </div> */}
-
-      {/* <div className="ml-44">
-        <LedgersTable></LedgersTable>
-      </div> */}
-
-      {/* <div className="flex flex-row ml-44">
-        <div className=""><LedgersTable></LedgersTable></div>
-
-        <div className="flex-grow bg-slate-200">
-          <TAccounts></TAccounts>
-        </div>
-      </div> */}
-      {/* 
-      <div className="flex flex-row ml-44">
-        <div className="basis-4/12 bg-slate-400">sidebar</div>
-
-        <div className="basis-11/12 bg-red-200">T accounts scrollable</div>
-      </div> */}
-
       <div className="ml-44 box-border h-screen bg-gray-200 pl-4">
-        <div className="sticky mr-12 flex h-full space-x-4">
-          {/* <div className="h-screen w-1/4 bg-green-200">
-            <div className="mt-2 pt-2 pb-2 text-center">
-              <Link href="/">Dashboard</Link>
-            </div>
-            <div className="pt-2 pb-2 text-center">
-              <Link href="/Journals">Journals</Link>
-            </div>
-            <div className="pt-2 pb-2 text-center">
-              <Link href="/Ledgers/Ledgers">Ledgers</Link>
-            </div>
-            <div className="pt-2 pb-2 text-center">
-              <Link href="/Reporting">Reporting</Link>
-            </div>
-            <div className="pt-2 pb-2 text-center">
-              <Link href="/">Trial Balance</Link>
-            </div>
-            <div className="pt-2 pb-2 text-center">
-              <Link href="/">User</Link>
-            </div>
-            <div className="pt-2 pb-2 text-center">
-              <Link href="/">Organization</Link>
-            </div>
-          </div> */}
-
+        <div className="mr-12 flex h-full space-x-4">
+          {/* TODO: add sub headers for "each: group name" */}
           {/*Account Names List*/}
-          <div className="my-8 w-1/4 overflow-y-scroll bg-red-200">
+          <div className="my-8 w-1/4 overflow-y-scroll bg-teal-50">
             {Object.values(ledgers).length > 0 ? (
               Object.values(ledgers).map((ledger) => {
                 //calculate Balances:
@@ -104,18 +56,31 @@ export default function Ledgers() {
                 let balance = debitBalance - creditBalance;
 
                 return (
-                  <div className="flex p-2 border">
-                    {/* FIXME: add sub headers for "each: group name" */}
-                    {/* <div className=""></div> */}
-                    <div className="flex">
-                      {ledger.nominalAccount.accountName}
+                  <Link
+                    href={"#" + ledger.nominalAccount.code.toString()}
+                    onClick={() => {
+                      setSelectedAccounts((selectedAccounts) => [
+                        ...selectedAccounts,
+                        ledger.nominalAccount.code,
+                      ]);
+                    }}
+                  >
+                    <div
+                      className="flex p-2 border"
+                      key={ledger.nominalAccount.code}
+                    >
+                      {/* FIXME: add sub headers for "each: group name" */}
+                      {/* <div className=""></div> */}
+                      <div className="flex">
+                        {ledger.nominalAccount.accountName}
+                      </div>
+                      <div className="ml-auto pr-2">
+                        {balance > 0
+                          ? String(balance) + " D"
+                          : String((balance *= -1)) + " C"}
+                      </div>
                     </div>
-                    <div className="ml-auto pr-2">
-                      {balance > 0
-                        ? String(balance) + " D"
-                        : String((balance *= -1)) + " C"}
-                    </div>
-                  </div>
+                  </Link>
                 );
               })
             ) : (
@@ -124,13 +89,152 @@ export default function Ledgers() {
           </div>
 
           {/* TAccounts */}
-          <div className="my-4 w-full space-y-44 overflow-y-scroll bg-teal-200">
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
-            <p>content</p>
+          {/* TODO:balance B/D needs to be implemented */}
+          <div className="my-4 w-full overflow-y-scroll bg-white">
+            {Object.values(ledgers).length > 0 ? (
+              Object.values(ledgers).map((ledger) => {
+                //TODO: change visibility of ledgers based on Filter
+
+                return (
+                  <div
+                    key={ledger.nominalAccount.code}
+                    className="mb-10 p-2"
+                    id={ledger.nominalAccount.code}
+                  >
+                    <div className="flex bg-teal-50">
+                      <p className="text-left pt-2 pb-2 pl-2 w-1/3">Dr</p>
+                      <h1 className=" text-center text-xl font-semibold leading-norma pt-2 pb-2 w-2/3">
+                        {ledger.nominalAccount.accountName +
+                          " - " +
+                          ledger.nominalAccount.code}
+                      </h1>
+                      <p className="text-right pt-2 pb-2 pr-2 w-1/3">Cr</p>
+                    </div>
+                    <div className=" bg-white flex">
+                      <div className="flex flex-col w-1/2 overflow-hidden border-r-2 border-black">
+                        {/* <div className="text-center bg-teal-50">Dr</div> */}
+                        <table className="border-t-4 text-center table-auto ">
+                          <thead className="border-b">
+                            <tr>
+                              <th className="text-sm font-medium text-gray-900 py-2 border-r">
+                                Date
+                              </th>
+                              <th className="text-sm font-medium text-gray-900 px-2 py-2 border-r">
+                                Ref
+                              </th>
+                              <th className="text-sm font-medium text-gray-900 px-2 py-2 border-r">
+                                Details
+                              </th>
+                              <th className="text-sm font-medium text-gray-900 px-2 py-2 border-r">
+                                Account
+                              </th>
+                              <th className="text-sm font-medium text-gray-900 px-2 py-2">
+                                Amount
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {ledger.Debit.map((transaction: any) => {
+                              let getDate = (strDate: string) => {
+                                let date = new Date(Date.parse(strDate));
+                                return (
+                                  date.getDay().toString() +
+                                  "/" +
+                                  date.getMonth().toString() +
+                                  "/" +
+                                  date.getFullYear().toString()
+                                );
+                              };
+
+                              return (
+                                <tr className="border-b" key={transaction.id}>
+                                  <td className=" text-xs px-2 py-2 text-gray-900 font-light border-r ">
+                                    {getDate(transaction.transactionDate)}
+                                  </td>
+                                  <td className="text-xs text-gray-900 font-light px-2 py-2  border-r ">
+                                    {transaction.id}
+                                  </td>
+                                  <td className="text-xs text-gray-900 font-light px-2 py-2  border-r">
+                                    {transaction.description}
+                                  </td>
+                                  <td className="text-xs text-gray-900 font-light px-2 py-2 border-r">
+                                    TODO-DoubleEntry
+                                  </td>
+                                  <td className="text-xs text-gray-900 font-light px-2 py-2 ">
+                                    {transaction.amount}
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <div className="flex flex-col w-1/2 overflow-hidden border-l-2 border-black">
+                        {/* <div className="text-center bg-teal-50">Cr</div> */}
+                        <table className="border-t-4 text-center table-auto ">
+                          <thead className="border-b">
+                            <tr>
+                              <th className="text-sm font-medium text-gray-900 py-2 border-r">
+                                Date
+                              </th>
+                              <th className="text-sm font-medium text-gray-900 px-2 py-2 border-r">
+                                Ref
+                              </th>
+                              <th className="text-sm font-medium text-gray-900 px-2 py-2 border-r">
+                                Details
+                              </th>
+                              <th className="text-sm font-medium text-gray-900 px-2 py-2 border-r">
+                                Account
+                              </th>
+                              <th className="text-sm font-medium text-gray-900 px-2 py-2">
+                                Amount
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {ledger.Credit.map((transaction: any) => {
+                              let getDate = (strDate: string) => {
+                                let date = new Date(Date.parse(strDate));
+                                return (
+                                  date.getDay().toString() +
+                                  "/" +
+                                  date.getMonth().toString() +
+                                  "/" +
+                                  date.getFullYear().toString()
+                                );
+                              };
+
+                              return (
+                                <tr className="border-b" key={transaction.id}>
+                                  <td className=" text-xs px-2 py-2 text-gray-900 font-light border-r ">
+                                    {getDate(transaction.transactionDate)}
+                                  </td>
+                                  <td className="text-xs text-gray-900 font-light px-2 py-2  border-r ">
+                                    {transaction.id}
+                                  </td>
+                                  <td className="text-xs text-gray-900 font-light px-2 py-2  border-r">
+                                    {transaction.description}
+                                  </td>
+                                  <td className="text-xs text-gray-900 font-light px-2 py-2 border-r">
+                                    TODO-DoubleEntry
+                                  </td>
+                                  <td className="text-xs text-gray-900 font-light px-2 py-2 ">
+                                    {transaction.amount}
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <div></div>
+            )}
           </div>
         </div>
       </div>
