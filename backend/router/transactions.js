@@ -14,5 +14,6 @@ const { auth } = require("../middleware/auth");
 router.get("/", [auth], index);
 router.post("/create", [auth], create);
 router.delete("/:id", [auth], deleteTransaction); //uses path params
+// router.get("/ledgers", [auth], TODO:)
 
 module.exports = router;

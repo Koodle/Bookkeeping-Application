@@ -4,11 +4,11 @@ import axios from "axios";
 let token = "";
 if (typeof window !== "undefined") {
   localStorage.hasOwnProperty("token")
-    ? (token = `Bearer ${localStorage
-        .getItem("token")
-        .replace(/^"(.*)"$/, "$1")}`)
+    ? (token = `${localStorage.getItem("token").replace(/^"(.*)"$/, "$1")}`)
     : (token = "");
 }
+
+console.log(token);
 
 const API = axios.create({
   baseURL: "http://127.0.0.1:4000",

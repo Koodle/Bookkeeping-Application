@@ -1,3 +1,5 @@
+"use client";
+
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "@next/font/google";
@@ -9,18 +11,28 @@ import TransactonsTable from "../components/Dashboard/TransactionsTable";
 import BarChart from "../components/Dashboard/BarChart";
 import { LineChart } from "../components/Dashboard/LineChart";
 
+//FA
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+//redux
+import { useAppSelector, useAppDispatch } from "../store/hooks";
+import { getTransactions } from "../store/slices/transactionsSlice";
 
 //API
 import axios from "axios";
 import { useEffect, useState } from "react";
 import AuthService from "../services/authService";
+import { count } from "console";
+import { counter } from "@fortawesome/fontawesome-svg-core";
 
 //TODO: get data for year end, get data for charts & table, filter and searching.
 //TODO: improve ui for year end (billy)
 
 export default function Home() {
+  const dispatch = useAppDispatch();
+  const transactionsFromState = useAppSelector((state) => state.transactions);
+
   const [transactions, setTransactions] = useState<any[]>([]);
 
   useEffect(() => {
@@ -29,9 +41,12 @@ export default function Home() {
       email: "kazim@prisma.io",
       password: "password",
     }).then((res) => {
-      console.log(res);
-      setTransactions(res.transactions);
+      // console.log(res);
+      // setTransactions(res.transactions);
     });
+
+    dispatch(getTransactions());
+    // console.log("transactionsFromState: ", transactionsFromState);
   }, []);
 
   return (

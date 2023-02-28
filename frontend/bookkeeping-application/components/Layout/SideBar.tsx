@@ -15,13 +15,10 @@ export default function SideBar() {
         <Link href="/">Dashboard</Link>
       </div>
       <div className="pt-2 pb-2 text-center">
-        <Link href="/">Journals</Link>
+        <Link href="/Journals">Journals</Link>
       </div>
       <div className="pt-2 pb-2 text-center">
         <Link href="/Ledgers">Ledgers</Link>
-      </div>
-      <div className="pt-2 pb-2 text-center">
-        <Link href="/">Reporting</Link>
       </div>
 
       {/* <div className="pt-2 pb-2 text-center">
@@ -30,6 +27,10 @@ export default function SideBar() {
 
       <div className="pt-2 pb-2 text-center">
         <Link href="/">Trial Balance</Link>
+      </div>
+
+      <div className="pt-2 pb-2 text-center">
+        <Link href="/">Reporting</Link>
       </div>
 
       {/* <div className="pt-2 pb-2 text-center">

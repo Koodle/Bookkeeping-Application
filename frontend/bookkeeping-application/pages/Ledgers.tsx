@@ -2,15 +2,24 @@ import SideBar from "../components/Layout/SideBar";
 import LedgersTable from "../components/Ledgers/LedgersTable";
 import TAccounts from "../components/Ledgers/TAccounts";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencil } from "@fortawesome/free-solid-svg-icons";
+
 //API
 import axios from "axios";
 import { useEffect, useState } from "react";
 import AuthService from "../services/authService";
 
+//redux
+import { useAppSelector, useAppDispatch } from "../store/hooks";
+import { getTransactions } from "../store/slices/transactionsSlice";
+
 import Link from "next/link";
 import { log } from "console";
 
 export default function Ledgers() {
+  const transactionsFromState = useAppSelector((state) => state.transactions);
+
   const [ledgers, setLedgers] = useState<any[]>([]);
   const [selectedAccounts, setSelectedAccounts] = useState<any[]>([]);
 
@@ -24,6 +33,17 @@ export default function Ledgers() {
       setLedgers(res.ledgers);
     });
   }, []);
+
+  function editTransaction(id: Text) {
+    //in your test1
+    //foo is the key, bar is the value
+    localStorage.setItem("foo", "bar");
+
+    //in your test 2 you can get the bar by using foo key
+    const bar = localStorage.setItem("foo", "bar");
+
+    console.log(bar); // bar
+  }
 
   return (
     <div>
@@ -116,7 +136,7 @@ export default function Ledgers() {
                         <table className="border-t-4 text-center table-auto ">
                           <thead className="border-b">
                             <tr>
-                              <th className="text-sm font-medium text-gray-900 py-2 border-r">
+                              <th className="text-sm font-medium text-gray-900 py-2 border-r border-l">
                                 Date
                               </th>
                               <th className="text-sm font-medium text-gray-900 px-2 py-2 border-r">
@@ -128,7 +148,7 @@ export default function Ledgers() {
                               <th className="text-sm font-medium text-gray-900 px-2 py-2 border-r">
                                 Account
                               </th>
-                              <th className="text-sm font-medium text-gray-900 px-2 py-2">
+                              <th className="text-sm font-medium text-gray-900 px-2 py-2 border-r">
                                 Amount
                               </th>
                             </tr>
@@ -148,7 +168,7 @@ export default function Ledgers() {
 
                               return (
                                 <tr className="border-b" key={transaction.id}>
-                                  <td className=" text-xs px-2 py-2 text-gray-900 font-light border-r ">
+                                  <td className=" text-xs px-2 py-2 text-gray-900 font-light border-r border-l">
                                     {getDate(transaction.transactionDate)}
                                   </td>
                                   <td className="text-xs text-gray-900 font-light px-2 py-2  border-r ">
@@ -160,8 +180,16 @@ export default function Ledgers() {
                                   <td className="text-xs text-gray-900 font-light px-2 py-2 border-r">
                                     TODO-DoubleEntry
                                   </td>
-                                  <td className="text-xs text-gray-900 font-light px-2 py-2 ">
+                                  <td className="text-xs text-gray-900 font-light px-2 py-2 border-r">
                                     {transaction.amount}
+                                  </td>
+                                  <td
+                                    className="px-2"
+                                    onClick={() =>
+                                      editTransaction(transaction.id)
+                                    }
+                                  >
+                                    <FontAwesomeIcon icon={faPencil} />
                                   </td>
                                 </tr>
                               );
@@ -187,7 +215,7 @@ export default function Ledgers() {
                               <th className="text-sm font-medium text-gray-900 px-2 py-2 border-r">
                                 Account
                               </th>
-                              <th className="text-sm font-medium text-gray-900 px-2 py-2">
+                              <th className="text-sm font-medium text-gray-900 px-2 py-2 border-r">
                                 Amount
                               </th>
                             </tr>
@@ -219,8 +247,16 @@ export default function Ledgers() {
                                   <td className="text-xs text-gray-900 font-light px-2 py-2 border-r">
                                     TODO-DoubleEntry
                                   </td>
-                                  <td className="text-xs text-gray-900 font-light px-2 py-2 ">
+                                  <td className="text-xs text-gray-900 font-light px-2 py-2 border-r ">
                                     {transaction.amount}
+                                  </td>
+                                  <td
+                                    className="px-2 border-r"
+                                    onClick={() =>
+                                      editTransaction(transaction.id)
+                                    }
+                                  >
+                                    <FontAwesomeIcon icon={faPencil} />
                                   </td>
                                 </tr>
                               );
