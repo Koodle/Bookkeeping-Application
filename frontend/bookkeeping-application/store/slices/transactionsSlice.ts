@@ -39,10 +39,10 @@ export const TransactionSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getTransactions.fulfilled, (state, action) => {
-      console.log("action.payload: ", action.payload);
-
-      state.transactions = action.payload;
-      console.log("state.transactions: ", state.transactions);
+      // console.log("action.payload: ", action.payload);
+      state.transactions = action.payload.transactions;
+      state.ledgers = action.payload.ledgers;
+      // console.log("state.transactions: ", state.transactions);
     });
   },
 });

@@ -18,32 +18,23 @@ import Link from "next/link";
 import { log } from "console";
 
 export default function Ledgers() {
-  const transactionsFromState = useAppSelector((state) => state.transactions);
+  const ledgersFromState = useAppSelector(
+    (state) => state.transactions.ledgers
+  );
 
-  const [ledgers, setLedgers] = useState<any[]>([]);
+  const [ledgers, setLedgers] = useState<any[]>(ledgersFromState);
   const [selectedAccounts, setSelectedAccounts] = useState<any[]>([]);
 
   useEffect(() => {
-    AuthService.login({
-      //FIXME: get from the login page once built
-      email: "kazim@prisma.io",
-      password: "password",
-    }).then((res) => {
-      // console.log(res.ledgers);
-      setLedgers(res.ledgers);
-    });
+    // AuthService.login({
+    //   //FIXME: get from the login page once built
+    //   email: "kazim@prisma.io",
+    //   password: "password",
+    // }).then((res) => {
+    //   // console.log(res.ledgers);
+    //   setLedgers(res.ledgers);
+    // });
   }, []);
-
-  function editTransaction(id: Text) {
-    //in your test1
-    //foo is the key, bar is the value
-    localStorage.setItem("foo", "bar");
-
-    //in your test 2 you can get the bar by using foo key
-    const bar = localStorage.setItem("foo", "bar");
-
-    console.log(bar); // bar
-  }
 
   return (
     <div>
@@ -183,14 +174,14 @@ export default function Ledgers() {
                                   <td className="text-xs text-gray-900 font-light px-2 py-2 border-r">
                                     {transaction.amount}
                                   </td>
-                                  <td
-                                    className="px-2"
-                                    onClick={() =>
-                                      editTransaction(transaction.id)
-                                    }
-                                  >
-                                    <FontAwesomeIcon icon={faPencil} />
-                                  </td>
+                                  <Link href={"/Journals/" + transaction.id}>
+                                    <td className="px-2 pt-2">
+                                      <FontAwesomeIcon
+                                        icon={faPencil}
+                                        className="w-3"
+                                      />
+                                    </td>
+                                  </Link>
                                 </tr>
                               );
                             })}
@@ -250,14 +241,14 @@ export default function Ledgers() {
                                   <td className="text-xs text-gray-900 font-light px-2 py-2 border-r ">
                                     {transaction.amount}
                                   </td>
-                                  <td
-                                    className="px-2 border-r"
-                                    onClick={() =>
-                                      editTransaction(transaction.id)
-                                    }
-                                  >
-                                    <FontAwesomeIcon icon={faPencil} />
-                                  </td>
+                                  <Link href={"/Journals/" + transaction.id}>
+                                    <td className="px-2 pt-2">
+                                      <FontAwesomeIcon
+                                        icon={faPencil}
+                                        className="w-3"
+                                      />
+                                    </td>
+                                  </Link>
                                 </tr>
                               );
                             })}

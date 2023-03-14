@@ -1,25 +1,87 @@
-import SideBar from "../components/Layout/SideBar";
-import LedgersTable from "../components/Ledgers/LedgersTable";
-import TAccounts from "../components/Ledgers/TAccounts";
+import SideBar from "../../components/Layout/SideBar";
+import LedgersTable from "../../components/Ledgers/LedgersTable";
+import TAccounts from "../../components/Ledgers/TAccounts";
 
 //API
 import axios from "axios";
 import { useEffect, useState } from "react";
-import TransactionsService from "../services/transactionsService";
+import TransactionsService from "../../services/transactionsService";
 
+//redux
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
+
+//router
 import Link from "next/link";
-import { log } from "console";
+import { useRouter } from "next/router";
+
+function findTransactionsFromID(id: any, transactions: any) {
+  let Id = parseInt(id);
+
+  let trans1: any = null;
+  let trans2: any = null;
+
+  transactions.forEach((element: any) => {
+    // console.log("element id type ", typeof element.id);
+    // console.log("id ", typeof id);
+
+    if (element.id === Id) {
+      console.log("tranaction 1: ", element);
+      trans1 = element;
+    }
+  });
+
+  if (trans1 != null && trans1.doubleEntryID != null) {
+    transactions.forEach((element: any) => {
+      if (element.id === trans1.doubleEntryID) {
+        trans2 = element;
+      }
+    });
+  }
+  return [trans1, trans2];
+}
 
 export default function Ledgers() {
-  //TODO: form validation
+  //dynamic routes
+  const router = useRouter();
+  const { id } = router.query;
 
-  const [date1, setDate1] = useState<any>(new Date().toJSON().slice(0, 10));
-  const [ref1, setRef1] = useState<any>(1); //TODO: calculate this value
-  const [description1, setDescription1] = useState<any>();
-  const [account1, setAccount1] = useState<any>("1000");
-  const [amount1, setAmount1] = useState<any>();
-  const [debit1, setDebit1] = useState<any>(0);
-  const [credit1, setCredit1] = useState<any>(0);
+  //transactions Redux store
+  const transactionsFromState = useAppSelector(
+    (state) => state.transactions.transactions
+  );
+
+  //two trans
+  const [trans1, setTrans1] = useState<any>(
+    findTransactionsFromID(id, transactionsFromState)[0]
+  );
+  const [trans2, setTrans2] = useState<any>(
+    findTransactionsFromID(id, transactionsFromState)[1]
+  );
+
+  //form
+  const [date1, setDate1] = useState<any>(
+    trans1.transactionDate
+      ? new Date(trans1.transactionDate).toJSON().slice(0, 10)
+      : new Date().toJSON().slice(0, 10)
+  );
+  const [ref1, setRef1] = useState<any>(
+    trans1.id ? trans1.id : 1 //TODO: calculate this value
+  );
+  const [description1, setDescription1] = useState<any>(
+    trans1.description ? trans1.description : ""
+  );
+  const [account1, setAccount1] = useState<any>(
+    trans1.nominalAccountID ? trans1.nominalAccountID.toString() : "1000"
+  );
+  const [amount1, setAmount1] = useState<any>(
+    trans1.amount ? trans1.amount : ""
+  );
+  const [debit1, setDebit1] = useState<any>(
+    trans1.entryType === "Debit" ? 1 : 0
+  );
+  const [credit1, setCredit1] = useState<any>(
+    trans1.entryType === "Credit" ? 1 : 0
+  );
 
   const [date2, setDate2] = useState<any>(new Date().toJSON().slice(0, 10));
   const [ref2, setRef2] = useState<any>(1);
@@ -28,11 +90,6 @@ export default function Ledgers() {
   const [amount2, setAmount2] = useState<any>();
   const [debit2, setDebit2] = useState<any>(0);
   const [credit2, setCredit2] = useState<any>(0);
-
-  // useEffect(() => {
-  //   //TODO: Get last ref so you can append
-  //   //TODO: if you have come from
-  // }, []);
 
   function submitJournals() {
     console.log("submit");
@@ -121,7 +178,7 @@ export default function Ledgers() {
                     type="date"
                     id="start"
                     name="trip-start"
-                    defaultValue={new Date().toJSON().slice(0, 10)}
+                    defaultValue={date1}
                   ></input>
                 </td>
                 <td className="px-2 py-2 text-gray-900 font-light border-r border-b">
@@ -129,6 +186,7 @@ export default function Ledgers() {
                     className="block w-full p-1"
                     type="text"
                     onChange={(e) => setDescription1(e.target.value)}
+                    defaultValue={description1}
                   />
                 </td>
                 <td className="px-2 py-2 text-gray-900 font-light border-r border-b">
@@ -137,6 +195,7 @@ export default function Ledgers() {
                     name="cars"
                     id="cars"
                     onChange={(e) => setAccount1(e.target.value)}
+                    defaultValue={account1}
                   >
                     <option value="1000">Bank - 1000</option>
                     <option value="3000">Capital - 3000</option>
@@ -158,6 +217,7 @@ export default function Ledgers() {
                         ? true
                         : false
                     }
+                    defaultValue={debit1 === 1 ? amount1 : ""}
                   />
                 </td>
                 <td className="px-2 py-2 text-gray-900 font-light border-r border-b">
@@ -174,6 +234,7 @@ export default function Ledgers() {
                         ? true
                         : false
                     }
+                    defaultValue={credit1 === 1 ? amount1 : ""}
                   />
                 </td>
               </tr>
@@ -254,57 +315,6 @@ export default function Ledgers() {
           </button>
         </div>
       </div>
-
-      {/* <div className="ml-44 box-border h-screen bg-gray-200 pl-4">
-        <div className="">
-          <table className="border-t-4 text-center table-auto ">
-            <thead className="border-b">
-              <tr>
-                <th className="text-sm font-medium text-gray-900 py-2 border-r">
-                  Date
-                </th>
-                <th className="text-sm font-medium text-gray-900 px-2 py-2 border-r">
-                  Ref
-                </th>
-                <th className="text-sm font-medium text-gray-900 px-2 py-2 border-r">
-                  Details
-                </th>
-                <th className="text-sm font-medium text-gray-900 px-2 py-2 border-r">
-                  Account
-                </th>
-                <th className="text-sm font-medium text-gray-900 px-2 py-2">
-                  Amount
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b">
-                <td className=" text-xs px-2 py-2 text-gray-900 font-light border-r ">
-                  hi
-                </td>
-                <td className="text-xs text-gray-900 font-light px-2 py-2 border-r ">
-                  hi
-                </td>
-                <td className="text-xs text-gray-900 font-light px-2 py-2  border-r">
-                  hi
-                </td>
-                <td className="text-xs text-gray-900 font-light px-2 py-2 border-r">
-                  TODO-DoubleEntry
-                </td>
-                <td className="text-xs text-gray-900 font-light px-2 py-2 ">
-                  hi
-                </td>
-                <input
-                  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                  id="grid-first-name"
-                  type="text"
-                  placeholder="Jane"
-                ></input>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div> */}
     </div>
   );
 }

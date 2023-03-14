@@ -18,6 +18,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //redux
 import { useAppSelector, useAppDispatch } from "../store/hooks";
 import { getTransactions } from "../store/slices/transactionsSlice";
+import { login } from "../store/slices/authSlice";
 
 //API
 import axios from "axios";
@@ -33,20 +34,24 @@ export default function Home() {
   const dispatch = useAppDispatch();
   const transactionsFromState = useAppSelector((state) => state.transactions);
 
-  const [transactions, setTransactions] = useState<any[]>([]);
+  const [transactions, setTransactions] = useState<any[]>(
+    transactionsFromState
+  );
 
   useEffect(() => {
-    AuthService.login({
-      //FIXME: get from the login page once built
-      email: "kazim@prisma.io",
-      password: "password",
-    }).then((res) => {
-      // console.log(res);
-      // setTransactions(res.transactions);
-    });
+    // AuthService.login({
+    //   //FIXME: get from the login page once built
+    //   email: "kazim@prisma.io",
+    //   password: "password",
+    // }).then((res) => {
+    //   // console.log(res);
+    //   // setTransactions(res.transactions);
+    // });
 
-    dispatch(getTransactions());
-    // console.log("transactionsFromState: ", transactionsFromState);
+    dispatch(login()).then(() => {
+      dispatch(getTransactions());
+      console.log("transactionsFromState: ", transactionsFromState);
+    });
   }, []);
 
   return (

@@ -13,7 +13,7 @@ exports.index = async (req, res) => {
 
   // const transactions = await prisma.transactions.findMany({
   //   where: {
-  //     userID: req.user.id,
+  //     userID: req.user.id,you
   //   },
   // });
 
@@ -67,9 +67,69 @@ exports.create = async (req, res) => {
   }
 };
 
-/*delete a transaction*/
-exports.deleteTransaction = async (req, res) => {
+/*delete transactions*/
+exports.deleteTransactions = async (req, res) => {
   console.log("transactions/delete");
+  try {
+    console.log(req.body);
+    console.log(req.user);
+
+    req.body.transactions.forEach(async (element) => {
+      const deleteTransaction = await prisma.transactions.delete({
+        where: {
+          id: element.id,
+          // userID: req.user.id,
+        },
+      });
+    });
+
+    //TODO:
+    //1) find both transactions where the userID is same as that taken from token & transaction ID matches the one sent
+    //2) find the second transaction, Do same checks as step 1, but also check their double entry values to see if they match.
+
+    //FIXME: transactions and ledgers are not updated need to use .then(), if i call get transactions they are deleted
+
+    //append transactions
+    let transactions = await getTransactions(req.user.id);
+
+    //append ledgers
+    let ledgers = await getLedgers(req.user.id);
+
+    res.send({ transactions: transactions, ledgers: ledgers });
+  } catch (e) {
+    return res.status(500).json({ status: "Error", message: e.message });
+  }
+};
+
+/*edit transactions*/
+exports.editTransactions = async (req, res) => {
+  console.log("transactions/delete");
+
+  try {
+    req.transactions.forEach((element) => {
+      //find ID
+      //make edit
+    });
+
+    //TODO: check if transaction is found
+    //check if user found
+    // if (!user) {
+    //   console.log("not found");
+    //   return res.status(404).json({ message: "user not found" });
+    // }
+
+    //return transactions
+    let transactions = await getTransactions(req.user.id);
+
+    //return ledgers
+    let ledgers = await getLedgers(req.user.id);
+
+    //TODO:return success or failure
+
+    res.send({ transactions: transactions, ledgers: ledgers });
+  } catch (e) {
+    return res.status(500).json({ status: "Error", message: e.message });
+  }
 };
 
 //TODO: this should be done by date order, then will be shown in dashboard
