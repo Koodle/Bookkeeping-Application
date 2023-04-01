@@ -10,7 +10,7 @@ import TransactionsService from "../../services/transactionsService";
 import Link from "next/link";
 import { log } from "console";
 
-export default function Ledgers() {
+export default function Journals() {
   //TODO: form validation
 
   const [date1, setDate1] = useState<any>(new Date().toJSON().slice(0, 10));

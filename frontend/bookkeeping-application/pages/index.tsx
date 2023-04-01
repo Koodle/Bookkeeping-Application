@@ -34,9 +34,9 @@ export default function Home() {
   const dispatch = useAppDispatch();
   const transactionsFromState = useAppSelector((state) => state.transactions);
 
-  const [transactions, setTransactions] = useState<any[]>(
-    transactionsFromState
-  );
+  // const [transactions, setTransactions] = useState<any[]>(
+  //   transactionsFromState
+  // );
 
   useEffect(() => {
     // AuthService.login({
@@ -52,6 +52,7 @@ export default function Home() {
       dispatch(getTransactions());
       console.log("transactionsFromState: ", transactionsFromState);
     });
+
   }, []);
 
   return (
@@ -91,7 +92,7 @@ export default function Home() {
           </div>
 
           <div className="">
-            <TransactonsTable transactions={transactions} />
+          
           </div>
         </div>
       </div>

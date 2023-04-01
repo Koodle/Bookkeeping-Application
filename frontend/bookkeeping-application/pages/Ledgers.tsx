@@ -55,16 +55,16 @@ export default function Ledgers() {
 
                 if (ledger.Debit.length > 0) {
                   ledger.Debit.forEach((transaction: any) => {
-                    debitBalance += parseInt(transaction.amount);
+                    debitBalance += parseFloat(transaction.amount);
                   });
                 }
 
                 if (ledger.Credit.length > 0) {
                   ledger.Credit.forEach((transaction: any) => {
-                    creditBalance += parseInt(transaction.amount);
+                    creditBalance += parseFloat(transaction.amount);
                   });
                 }
-                let balance = debitBalance - creditBalance;
+                let balance = (debitBalance - creditBalance).toFixed(2);
 
                 return (
                   <Link
@@ -75,6 +75,7 @@ export default function Ledgers() {
                         ledger.nominalAccount.code,
                       ]);
                     }}
+                    key={ledger.id}
                   >
                     <div
                       className="flex p-2 border"

@@ -36,6 +36,8 @@ model NominalAccounts {
 model Transactions {
   id Int @id @default(autoincrement())
 
+  reference Int? @unique
+
   nominalAccounts NominalAccounts @relation(fields: [nominalAccountID], references: [code])  //is for prisma (will not show in db)
   nominalAccountID Int
   
@@ -47,7 +49,7 @@ model Transactions {
   user User @relation(fields: [userID], references: [id])
   userID Int
 
-  doubleEntryID Int?
+  doubleEntryID Int? @unique
 }
 
 model BusinessData {

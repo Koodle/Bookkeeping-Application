@@ -30,7 +30,7 @@ export default function SideBar() {
       </div>
 
       <div className="pt-2 pb-2 text-center">
-        <Link href="/">Reporting</Link>
+        <Link href="/Reporting">Reporting</Link>
       </div>
 
       {/* <div className="pt-2 pb-2 text-center">

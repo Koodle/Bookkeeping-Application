@@ -25,15 +25,19 @@ exports.login = async (req, res) => {
       return res.status(404).json({ message: "user not found" });
     }
 
-    console.log("user", user);
+    console.log("user found: ", user);
 
     //check if password matches
     if (!bcrypt.compareSync(password, user.password)) {
       return res.status(401).json({ message: "Incorrect password!" });
     } //401 is forbidden
 
+    console.log("password match");
+
     //generate auth token for user
-    let userWithToken = generateToken(user); //.get({raw: true}) gives a plain JS object on which we can use BCRYPT
+    let userWithToken = await generateToken(user); //.get({raw: true}) gives a plain JS object on which we can use BCRYPT
+
+    console.log("user with token ", userWithToken);
 
     //append user data
     let userWithTransactions = await appendTransactions(userWithToken);
@@ -41,18 +45,22 @@ exports.login = async (req, res) => {
     //append user ledgers
     let userWithLedgers = await appendLedgers(userWithTransactions);
 
+    console.log("user with ledgers ", userWithLedgers);
+
     return res.send(userWithLedgers);
   } catch (e) {
     return res.status(500).json({ message: e.message }); //500 is internal server error
   }
 };
 
-const generateToken = (user) => {
+const generateToken = async (user) => {
   delete user.password;
   //jwt.sign(payload, secretKey, Options)
   // const token = jwt.sign(user, config.appKey, { expiresIn: 86400 }); //TODO: set expiresIn for jwt
   const token = jwt.sign(user, config.appKey);
   //combine the user with the token using spread operator
+  console.log("token, ", token);
+  console.log("user, ", user);
   return { ...{ user }, ...{ token } };
 };
 
