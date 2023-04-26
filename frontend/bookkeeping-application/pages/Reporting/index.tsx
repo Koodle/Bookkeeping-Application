@@ -1,6 +1,6 @@
 import SideBar from "../../components/Layout/SideBar";
-import LedgersTable from "../../components/Ledgers/LedgersTable";
-import TAccounts from "../../components/Ledgers/TAccounts";
+// import LedgersTable from "../../components/Ledgers/LedgersTable";
+// import TAccounts from "../../components/Ledgers/TAccounts";
 import Accordion from "../../components/Reporting/Accordion";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,6 +18,9 @@ import { getTransactions } from "../../store/slices/transactionsSlice";
 import Link from "next/link";
 import { log } from "console";
 
+//PDF
+import { jsPDF } from "jspdf";
+
 export default function Ledgers() {
   const ledgersFromState = useAppSelector(
     (state) => state.transactions.ledgers
@@ -29,14 +32,24 @@ export default function Ledgers() {
   useEffect(() => {
     // console.log("ledgers from state");
     // console.log(ledgersFromState);
+    // const generatePDF = () => {
+    //   const component = document.querySelector("#PL")!;
+    //   console.log(component);
+    //   const report = new jsPDF('portrait',"pt",'a4');
+    //   report.html(component).then(() => {
+    //       report.save('PL.pdf');
+    //   });
+    // }
+  
+    // generatePDF()
+    
   
   }, [ledgersFromState]);
 
   let organizedLedgers = organizeLedgersByAccount(ledgersFromState)
     
-    
 
-  
+
 
   return (
     <div>
@@ -46,24 +59,13 @@ export default function Ledgers() {
 
       <div className="fixed ml-44 bg-orange-300">filters: date/YE, Download to excell or pdf</div>
 
-      <div className="ml-44 box-border h-screen bg-gray-200 pl-4 mt-4">
+      <div className="ml-44 box-border h-screen bg-gray-200 pl-4">
         
         <div className="mr-12 flex h-full space-x-4">
         
           
 
           <div className="my-4 w-full overflow-y-scroll bg-white px-2">
-            <h1>Current Assets</h1>
-            <h1>Non-current Assets</h1>
-            <h1>Current Liabilities</h1>
-            <h1>Non-current Liabilities</h1>
-            
-            <p>Total Current Liabilities</p>
-            <p>Net Current Assets</p>
-            <p>Net Assets</p>
-            
-            <h1>Capital</h1>
-
 
             <h1 className="text-center text-xl font-semibold leading-norma pt-4 pb-2">Balance Sheet</h1>
             <p className="text-center font-semibold text-sm">YE: Mar 2022</p>
@@ -92,7 +94,7 @@ export default function Ledgers() {
                       <div className="flex">
                           <h1 className="font-semibold w-1/2 border"></h1>
                           <h1 className="font-semibold w-1/4 border"></h1>
-                          <div className="w-1/4 text-center border">{Math.abs(parseFloat(subGroupBalance(Object.values(organizedLedgers.BS[subGroup]))))}</div>
+                          <div className="w-1/4 text-center border font-semibold">{Math.abs(parseFloat(subGroupBalance(Object.values(organizedLedgers.BS[subGroup]))))}</div>
                       </div>
                     
 
@@ -102,14 +104,14 @@ export default function Ledgers() {
               }
 
       
-            <div className="flex border-b-2 my-auto pt-4">
+            {/* <div className="flex border-b-2 my-auto pt-4">
               <h1 className="font-bold text-xl w-3/4">Equity</h1>
               <div className="w-1/4 text-center"></div>
-            </div>
+            </div> */}
             
           </div>
 
-          <div className="my-4 w-full overflow-y-scroll bg-white px-2">
+          <div className="my-4 w-full overflow-y-scroll bg-white px-2" id="PL">
 
             <h1 className="text-center text-xl font-semibold leading-norma pt-4 pb-2">Profit & Loss</h1>
             <p className="text-center font-semibold text-sm">YE: Mar 2022</p>
@@ -119,7 +121,7 @@ export default function Ledgers() {
           
                   return(
                     <div key={subGroup}>
-                      <h1  className="font-bold pt-2 text-xl">{subGroup}</h1>
+                      <h1  className="font-bold pt-2 pb-2 text-xl">{subGroup}</h1>
                       
                       {Object.values(organizedLedgers.PL[subGroup]).length > 0 ? Object.values(organizedLedgers.PL[subGroup]).map(ledger => {
 
@@ -138,7 +140,7 @@ export default function Ledgers() {
                       <div className="flex">
                           <h1 className="font-semibold w-1/2 border"></h1>
                           <h1 className="font-semibold w-1/4 border"></h1>
-                          <div className="w-1/4 text-center border">{Math.abs(parseFloat(subGroupBalance(Object.values(organizedLedgers.PL[subGroup]))))}</div>
+                          <div className="w-1/4 text-center border font-semibold">{Math.abs(parseFloat(subGroupBalance(Object.values(organizedLedgers.PL[subGroup]))))}</div>
                       </div>
                     
 
@@ -152,9 +154,9 @@ export default function Ledgers() {
             <Accordion title={"Gross Profit"} ledgers={ledgersFromState}></Accordion>
             <Accordion title={"Expenses"} ledgers={ledgersFromState}></Accordion> */}
       
-            <div className="flex border-b-2 my-auto pt-4">
+            <div className="flex border-b-2 my-auto pt-8">
               <h1 className="font-bold text-xl w-3/4">{getTotalProfit(organizedLedgers.PL) <= 0 ? "Profit" : "Loss"}</h1>
-              <div className="w-1/4 text-center">{Math.abs(getTotalProfit(organizedLedgers.PL))}</div>
+              <div className="w-1/4 text-center font-bold">{Math.abs(getTotalProfit(organizedLedgers.PL))}</div>
             </div>
             
           </div>          

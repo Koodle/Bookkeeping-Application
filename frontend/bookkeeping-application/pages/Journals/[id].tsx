@@ -1,6 +1,4 @@
 import SideBar from "../../components/Layout/SideBar";
-import LedgersTable from "../../components/Ledgers/LedgersTable";
-import TAccounts from "../../components/Ledgers/TAccounts";
 
 //API
 import axios from "axios";
@@ -49,6 +47,12 @@ export default function Ledgers() {
   const transactionsFromState = useAppSelector(
     (state) => state.transactions.transactions
   );
+  const ledgersFromState = useAppSelector(
+    (state) => state.transactions.ledgers
+  );
+
+  //Accounts drop down search bar
+  const [searchBarText, setSearchBarText] = useState<any>("");
 
   //two trans
   const [trans1, setTrans1] = useState<any>(
@@ -65,7 +69,7 @@ export default function Ledgers() {
       : new Date().toJSON().slice(0, 10)
   );
   const [ref1, setRef1] = useState<any>(
-    trans1.id ? trans1.id : 1 //TODO: calculate this value
+    trans1.reference ? trans1.reference : 1 //TODO: calculate this value
   );
   const [description1, setDescription1] = useState<any>(
     trans1.description ? trans1.description : ""
@@ -83,13 +87,37 @@ export default function Ledgers() {
     trans1.entryType === "Credit" ? 1 : 0
   );
 
-  const [date2, setDate2] = useState<any>(new Date().toJSON().slice(0, 10));
-  const [ref2, setRef2] = useState<any>(1);
-  const [description2, setDescription2] = useState<any>();
-  const [account2, setAccount2] = useState<any>("1000");
-  const [amount2, setAmount2] = useState<any>();
-  const [debit2, setDebit2] = useState<any>(0);
-  const [credit2, setCredit2] = useState<any>(0);
+  const [date2, setDate2] = useState<any>(
+    trans2.transactionDate
+      ? new Date(trans2.transactionDate).toJSON().slice(0, 10)
+      : new Date().toJSON().slice(0, 10)
+  );
+  const [ref2, setRef2] = useState<any>(
+    trans2.reference ? trans2.reference : 1 //TODO: calculate this value
+  );
+  const [description2, setDescription2] = useState<any>(
+    trans2.description ? trans2.description : ""
+  );
+  const [account2, setAccount2] = useState<any>(
+    trans2.nominalAccountID ? trans2.nominalAccountID.toString() : "1000"
+  );
+  const [amount2, setAmount2] = useState<any>(
+    trans2.amount ? trans2.amount : ""
+  );
+  const [debit2, setDebit2] = useState<any>(
+    trans2.entryType === "Debit" ? 1 : 0
+  );
+  const [credit2, setCredit2] = useState<any>(
+    trans2.entryType === "Credit" ? 1 : 0
+  );
+
+  // const [date2, setDate2] = useState<any>(new Date().toJSON().slice(0, 10));
+  // const [ref2, setRef2] = useState<any>(1);
+  // const [description2, setDescription2] = useState<any>();
+  // const [account2, setAccount2] = useState<any>("1000");
+  // const [amount2, setAmount2] = useState<any>();
+  // const [debit2, setDebit2] = useState<any>(0);
+  // const [credit2, setCredit2] = useState<any>(0);
 
   function submitJournals() {
     console.log("submit");
@@ -119,7 +147,7 @@ export default function Ledgers() {
       ],
     };
 
-    console.log(transactions);
+    // console.log(transactions);
 
     TransactionsService.create(
       //FIXME: get from the login page once built
@@ -135,6 +163,13 @@ export default function Ledgers() {
     // });
   }
 
+  function deleteJournals() {
+    console.log("delete");
+    //1) get Ids for both transactions
+    //2) delete both transactions
+
+  }
+
   return (
     <div>
       <div className="flex">
@@ -142,7 +177,12 @@ export default function Ledgers() {
       </div>
 
       <div className="ml-44 box-border h-screen bg-gray-200 pt-12">
-        <div className="bg-white ml-6 mr-6 h-60 ">
+
+        <div>
+          <h1 className="ml-6 text-5xl font-bold">Edit Journals</h1>
+        </div>
+
+        <div className="bg-white ml-6 mr-6 h-fit ">
           <table className="table-fixed text-center mt-10 w-full">
             <thead>
               <tr className="bg-slate-50">
@@ -197,10 +237,12 @@ export default function Ledgers() {
                     onChange={(e) => setAccount1(e.target.value)}
                     defaultValue={account1}
                   >
-                    <option value="1000">Bank - 1000</option>
-                    <option value="3000">Capital - 3000</option>
-                    <option value="4400">Purchases - 4400</option>
-                    <option value="5020">Advertising - 5020</option>
+                    {/* drop down options */}
+                    {Object.values(ledgersFromState).map((ledger: any)=>{
+                      return (
+                        <option key={ledger.nominalAccount.code} value={ledger.nominalAccount.code}>{ledger.nominalAccount.accountName + " - " + ledger.nominalAccount.code}</option>
+                      )
+                    })}
                   </select>
                 </td>
                 <td className="px-2 py-2 text-gray-900 font-light border-r border-b">
@@ -209,8 +251,11 @@ export default function Ledgers() {
                     type="text"
                     onChange={(e) => {
                       setDebit1(1);
+                      setDebit2(0);
                       setCredit1(0);
+                      setCredit2(1);
                       setAmount1(e.target.value);
+                      setAmount2(e.target.value);
                     }}
                     disabled={
                       credit1 != 0 && amount1 != "" && debit1 == 0
@@ -226,8 +271,11 @@ export default function Ledgers() {
                     type="text"
                     onChange={(e) => {
                       setDebit1(0);
+                      setDebit2(1);
                       setCredit1(1);
+                      setCredit2(0);
                       setAmount1(e.target.value);
+                      setAmount2(e.target.value);
                     }}
                     disabled={
                       credit1 == 0 && amount1 != "" && debit1 != 0
@@ -240,7 +288,7 @@ export default function Ledgers() {
               </tr>
               <tr className="px-2 py-2 text-gray-900 font-light border-r">
                 <td className="px-2 py-2 text-gray-900 font-light border-r border-b">
-                  <p>{ref1}</p>
+                  <p>{ref2}</p>
                 </td>
                 <td className="px-2 py-2 text-gray-900 font-light border-r border-b">
                   <input
@@ -249,7 +297,7 @@ export default function Ledgers() {
                     type="date"
                     id="start"
                     name="trip-start"
-                    defaultValue={new Date().toJSON().slice(0, 10)}
+                    defaultValue={date2}
                   ></input>
                 </td>
                 <td className="px-2 py-2 text-gray-900 font-light border-r border-b">
@@ -257,6 +305,7 @@ export default function Ledgers() {
                     className="block w-full p-1"
                     type="text"
                     onChange={(e) => setDescription2(e.target.value)}
+                    defaultValue={description2}
                   />
                 </td>
                 <td className="px-2 py-2 text-gray-900 font-light border-r border-b">
@@ -264,12 +313,15 @@ export default function Ledgers() {
                     className="block w-full p-1"
                     name="cars"
                     id="cars"
-                    onChange={(e) => setAccount2(e.target.value)}
+                    onChange={(e) => {setAccount2(e.target.value)}}
+                    defaultValue={(account2)}
                   >
-                    <option value="1000">Bank - 1000</option>
-                    <option value="3000">Capital - 3000</option>
-                    <option value="4400">Purchases - 4400</option>
-                    <option value="5020">Advertising - 5020</option>
+                    {/* drop down options */}
+                    {Object.values(ledgersFromState).map((ledger: any)=>{
+                      return (
+                        <option key={ledger.nominalAccount.code} value={ledger.nominalAccount.code}>{ledger.nominalAccount.accountName + " - " + ledger.nominalAccount.code}</option>
+                      )
+                    })} 
                   </select>
                 </td>
                 <td className="px-2 py-2 text-gray-900 font-light border-r border-b">
@@ -278,14 +330,20 @@ export default function Ledgers() {
                     type="text"
                     onChange={(e) => {
                       setDebit2(1);
+                      setDebit1(0);
                       setCredit2(0);
+                      setCredit1(1);
                       setAmount2(e.target.value);
+                      setAmount1(e.target.value);
                     }}
-                    disabled={
-                      credit2 != 0 && amount2 != "" && debit2 == 0
-                        ? true
-                        : false
-                    }
+                    // disabled={
+                    //   credit2 != 0 && amount2 != "" && debit2 == 0
+                    //     ? true
+                    //     : false
+                    // }
+                    // defaultValue={debit2===1 ? amount2 : ""}
+                    disabled={true}
+                    value={ debit2==1 ? amount2 : ""}
                   />
                 </td>
                 <td className="px-2 py-2 text-gray-900 font-light border-r border-b">
@@ -293,25 +351,37 @@ export default function Ledgers() {
                     className="block w-full p-1"
                     type="text"
                     onChange={(e) => {
+                      setDebit1(1);
                       setDebit2(0);
                       setCredit2(1);
-                      setAmount2(e.target.value);
+                      setCredit1(0);
                     }}
-                    disabled={
-                      credit2 == 0 && amount2 != "" && debit2 != 0
-                        ? true
-                        : false
-                    }
+                    // disabled={
+                    //   credit2 == 0 && amount2 != "" && debit2 != 0
+                    //     ? true
+                    //     : false
+                    // }
+                    // defaultValue={credit2===1 ? amount2 : ""}
+                    disabled={true}
+                    value={ credit2==1 ? amount2 : ""}
                   />
                 </td>
               </tr>
             </tbody>
           </table>
+        </div>
+        <div className="ml-auto w-fit mr-6 mt-4">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-20 mr-9"
+            onClick={deleteJournals}
+          >
+            Delete
+          </button>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-20"
             onClick={submitJournals}
           >
-            Button
+            Save
           </button>
         </div>
       </div>

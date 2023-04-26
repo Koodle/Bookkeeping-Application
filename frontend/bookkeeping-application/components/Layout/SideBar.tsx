@@ -21,30 +21,18 @@ export default function SideBar() {
         <Link href="/Ledgers">Ledgers</Link>
       </div>
 
-      {/* <div className="pt-2 pb-2 text-center">
-        <Link href="/">Chart of Accounts</Link>
-      </div> */}
-
-      <div className="pt-2 pb-2 text-center">
-        <Link href="/">Trial Balance</Link>
-      </div>
-
       <div className="pt-2 pb-2 text-center">
         <Link href="/Reporting">Reporting</Link>
       </div>
 
+      <div className="pt-2 pb-2 text-center">
+        <Link href="/User">User</Link>
+      </div>
       {/* <div className="pt-2 pb-2 text-center">
-        <Link href="/">Transactions</Link>
+        <Link href="/">Organization</Link>
       </div> */}
 
-      <div className="pt-2 pb-2 text-center">
-        <Link href="/">User</Link>
-      </div>
-      <div className="pt-2 pb-2 text-center">
-        <Link href="/">Organization</Link>
-      </div>
-
-      {/* <SideBarIcon icon={<FaFire size="28" />} /> */}
+      
     </div>
   );
 }

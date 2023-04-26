@@ -45,9 +45,12 @@ exports.login = async (req, res) => {
     //append user ledgers
     let userWithLedgers = await appendLedgers(userWithTransactions);
 
-    console.log("user with ledgers ", userWithLedgers);
+    //append organization info
+    let userWithBusinessData = await appendBusinessData(userWithLedgers);
 
-    return res.send(userWithLedgers);
+    console.log("user with ledgers ", userWithBusinessData);
+
+    return res.send(userWithBusinessData);
   } catch (e) {
     return res.status(500).json({ message: e.message }); //500 is internal server error
   }
@@ -122,3 +125,15 @@ const appendLedgers = async (user) => {
 
   return { ...user, ...{ ledgers } };
 };
+
+const appendBusinessData = async (user) => {
+  
+  const business = await prisma.businessData.findFirstOrThrow({
+    where: {
+      userID: user.id,
+    }
+  });
+
+  return { ...user, ...{ business } };
+};
+

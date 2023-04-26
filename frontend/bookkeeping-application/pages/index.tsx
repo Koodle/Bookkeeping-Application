@@ -2,8 +2,10 @@
 
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import { Inter } from "@next/font/google";
 import styles from "../styles/Home.module.css";
+
 //components
 import SideBar from "../components/Layout/SideBar";
 import DonutChart from "../components/Dashboard/DonutChart";
@@ -24,7 +26,7 @@ import { login } from "../store/slices/authSlice";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import AuthService from "../services/authService";
-import { count } from "console";
+import { count, log } from "console";
 import { counter } from "@fortawesome/fontawesome-svg-core";
 
 //TODO: get data for year end, get data for charts & table, filter and searching.
@@ -68,8 +70,8 @@ export default function Home() {
           <p className="pl-4 font-semibold">Dashboard</p>
           {/* <p className="ml-auto">Year End:</p>
           <input className="pr-4" type="date" value="2017-06-01" /> */}
-          <p className="ml-auto mr-2">Year End:</p>
-          <input type="month" min={"2018-03"} defaultValue={"2018-05"} />
+          {/* <p className="ml-auto mr-2">Year End:</p>
+          <input type="month" min={"2018-03"} defaultValue={"2018-05"} /> */}
         </div>
         <div className="flex">
           <SideBar />
@@ -91,11 +93,94 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="">
-          
+          <div className="bg-white h-60 mx-3 mt-2 shadow-sm rounded-lg">
+              <div className="flex bg-teal-50">
+                <h1 className=" text-center text-xl font-semibold leading-norma pt-2 pb-2 w-full">
+                  Transactions
+                </h1>
+                </div>
+                <div className=" bg-white flex">
+                      <div className="flex flex-col w-full overflow-x-hidden overflow-y-scroll h-72  border-black">
+                        <table className="border-t-4 text-center table-auto ">
+                          <thead className="border-b sticky top-0 bg-white">
+                            <tr>
+                              <th className="text-sm font-medium text-gray-900 py-2 border-r border-l">
+                                Date
+                              </th>
+                              <th className="text-sm font-medium text-gray-900 px-2 py-2 border-r">
+                                Ref
+                              </th>
+                              <th className="text-sm font-medium text-gray-900 px-2 py-2 border-r">
+                                Details
+                              </th>
+                              <th className="text-sm font-medium text-gray-900 px-2 py-2 border-r">
+                                Account
+                              </th>
+                              <th className="text-sm font-medium text-gray-900 px-2 py-2 border-r">
+                                Amount
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+
+                          {Object.values(transactionsFromState.transactions).reverse().map((transaction: any) => {
+                              let getDate = (strDate: string) => {
+                                let date = new Date(Date.parse(strDate));                               
+                                return (
+                                  date.getDate().toString() +
+                                  "/" +
+                                  (date.getMonth()+1).toString() +
+                                  "/" +
+                                  date.getFullYear().toString()
+                                );
+                              };
+
+                              //find double entrys                            
+                              // let nominalAccountID = undefined
+                              // Object.values(transactionsFromState).forEach((transactionState: any) => {
+                              //   if (transactionState.id == transaction.id){
+                              //     nominalAccountID = transactionState.nominalAccountID
+                              //     return 
+                              //   }
+                              // })
+                              // console.log(nominalAccountID);
+                              // return nominalAccountID
+                              
+                              
+                              return (
+                                <tr className="border-b" key={transaction.id} id={transaction.id}>
+                                  <td className=" text-xs px-2 py-2 text-gray-900 font-light border-r border-l">
+                                    {getDate(transaction.transactionDate)}
+                                  </td>
+                                  <td className="text-xs text-gray-900 font-light px-2 py-2  border-r ">
+                                    {transaction.id}
+                                  </td>
+                                  <td className="text-xs text-gray-900 font-light px-2 py-2  border-r">
+                                    {transaction.description}
+                                  </td>
+                                  <td className="text-xs text-gray-900 font-light px-2 py-2 border-r">
+                                    {/* TODO-DoubleEntry */}
+                                    <Link href={"/Ledgers#" + transaction.doubleEntryID}>
+                                    <td className="px-2 pt-2">
+                                      {transaction.doubleEntryID}
+                                    </td>
+                                  </Link>
+                                  </td>
+                                  <td className="text-xs text-gray-900 font-light px-2 py-2 border-r">
+                                    {transaction.amount + " "+ transaction.entryType[0] }
+                                  </td>
+                                </tr>
+                              );
+                            })}
+
+                          </tbody>
+                        </table>
+                      </div>     
+                    </div>     
+                                
+            </div>
           </div>
         </div>
-      </div>
     </>
   );
 }

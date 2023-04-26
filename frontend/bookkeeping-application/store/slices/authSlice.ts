@@ -16,6 +16,7 @@ const initialState = {
   // transactions: [], //TODO: get from local storage if exists
   // ledgers: [],
   user: {},
+  business: {},
 } as any;
 
 export const AuthSlice = createSlice({
@@ -30,6 +31,7 @@ export const AuthSlice = createSlice({
       // state.ledgers = action.payload.ledgers;
       // console.log("state.transactions: ", state.transactions);
       state.user = action.payload.user;
+      state.business = action.payload.business;
     });
   },
 });

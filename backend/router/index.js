@@ -8,4 +8,6 @@ router.use("/", require("./auth"));
 
 router.use("/transactions", require("./transactions"));
 
+// router.use("/reports/pdf", require("./pdf"));
+
 module.exports = router;
