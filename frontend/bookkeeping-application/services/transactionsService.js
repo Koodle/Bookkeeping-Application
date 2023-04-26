@@ -19,7 +19,24 @@ const TransactionsService = {
         console.log("Transactions service err", err);
       });
   },
-  // getLedgers:  TODO:
+  edit: (data) => {
+    return API.patch("/transactions/edit", data)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.log("Transactions service err", err);
+      });
+  },
+  delete: (data) => {
+    return API.delete("/transactions/delete", data)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.log("Transactions service err", err);
+      });
+  },
 };
 
 export default TransactionsService;

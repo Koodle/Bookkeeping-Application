@@ -10,6 +10,7 @@ import { log } from "console";
 
 //redux
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
+import { getTransactions } from "../../store/slices/transactionsSlice";
 
 export default function Journals() {
   //TODO: form validation
@@ -17,12 +18,14 @@ export default function Journals() {
   const transactionsFromState = useAppSelector((state: any) => state.transactions);
 
   function getlatestRef(transactions: any){
+    // console.log("ref");
+    // console.log(transactions.transactions.slice(-1));
     return transactions.transactions.slice(-1).pop().reference
   }
 
   const [date1, setDate1] = useState<any>(new Date().toJSON().slice(0, 10));
   const [ref1, setRef1] = useState<any>(getlatestRef(transactionsFromState)+1); //TODO: calculate this value
-  const [description1, setDescription1] = useState<any>(1);
+  const [description1, setDescription1] = useState<any>();
   const [account1, setAccount1] = useState<any>("1000");
   const [amount1, setAmount1] = useState<any>();
   const [debit1, setDebit1] = useState<any>(0);
@@ -36,10 +39,26 @@ export default function Journals() {
   const [debit2, setDebit2] = useState<any>(0);
   const [credit2, setCredit2] = useState<any>(0);
 
-  // useEffect(() => {
-  //   //TODO: Get last ref so you can append
-  //   //TODO: if you have come from
-  // }, []);
+  const dispatch = useAppDispatch();
+
+  function clearInputs(){
+    setDate1(new Date().toJSON().slice(0, 10))
+    setRef1(ref1+2); //TODO: calculate this value
+    setDescription1("");
+    setAccount1("1000");
+    setAmount1("");
+    setDebit1(0);
+    setCredit1(0);
+
+    setDate2(new Date().toJSON().slice(0, 10));
+    setRef2(ref2+2);
+    setDescription2("");
+    setAccount2("1000");
+    setAmount2("");
+    setDebit2(0);
+    setCredit2(0);
+  }
+
 
   function submitJournals() {
     console.log("submit");
@@ -58,6 +77,7 @@ export default function Journals() {
           transactionDate: date1,
           description: description1,
           amount: amount1,
+          reference: ref1
         },
         {
           nominalAccountID: account2,
@@ -65,6 +85,7 @@ export default function Journals() {
           transactionDate: date2,
           description: description2,
           amount: amount2,
+          reference: ref2
         },
       ],
     };
@@ -75,14 +96,15 @@ export default function Journals() {
       //FIXME: get from the login page once built
       transactions
     ).then((res) => {
-      // console.log(res.ledgers);
-      //   setLedgers(res.ledgers);
       console.log(res);
+      //update store 
+      dispatch(getTransactions())
+
+      //show notification of success OR clear inputs
+      
+      //clear inputs
+      clearInputs()
     });
-
-    // array.forEach(element => {
-
-    // });
   }
 
   return (
@@ -134,13 +156,15 @@ export default function Journals() {
                     id="start"
                     name="trip-start"
                     defaultValue={new Date().toJSON().slice(0, 10)}
+                    value={date1}
                   ></input>
                 </td>
                 <td className="px-2 py-2 text-gray-900 font-light border-r border-b">
                   <input
                     className="block w-full p-1"
                     type="text"
-                    onChange={(e) => setDescription1(e.target.value)}
+                    onChange={(e) => {setDescription1(e.target.value); setDescription2(e.target.value)}}
+                    value={description1}
                   />
                 </td>
                 <td className="px-2 py-2 text-gray-900 font-light border-r border-b">
@@ -149,11 +173,12 @@ export default function Journals() {
                     name="cars"
                     id="cars"
                     onChange={(e) => setAccount1(e.target.value)}
+                    defaultValue={account1}
                   >
                     {/* drop down options */}
                     {Object.values(transactionsFromState.ledgers).map((ledger: any)=>{
-                      console.log("ledger");
-                      console.log(ledger);
+                      // console.log("ledger");
+                      // console.log(ledger);
                       
                       return (
                         <option key={ledger.nominalAccount.code} value={ledger.nominalAccount.code}>{ledger.nominalAccount.accountName + " - " + ledger.nominalAccount.code}</option>
@@ -182,7 +207,6 @@ export default function Journals() {
                         ? true
                         : false
                     }
-                    
                   />
                 </td>
                 <td className="px-2 py-2 text-gray-900 font-light border-r border-b">
@@ -217,13 +241,15 @@ export default function Journals() {
                     id="start"
                     name="trip-start"
                     defaultValue={new Date().toJSON().slice(0, 10)}
+                    value={date2}
                   ></input>
                 </td>
                 <td className="px-2 py-2 text-gray-900 font-light border-r border-b">
                   <input
                     className="block w-full p-1"
                     type="text"
-                    onChange={(e) => setDescription2(e.target.value)}
+                    disabled={true}
+                    value={description2}
                   />
                 </td>
                 <td className="px-2 py-2 text-gray-900 font-light border-r border-b">
@@ -232,11 +258,12 @@ export default function Journals() {
                     name="cars"
                     id="cars"
                     onChange={(e) => setAccount2(e.target.value)}
+                    defaultValue={account2}
                   >
                     {/* drop down options */}
                     {Object.values(transactionsFromState.ledgers).map((ledger: any)=>{
-                      console.log("ledger");
-                      console.log(ledger);
+                      // console.log("ledger");
+                      // console.log(ledger);
                       
                       return (
                         <option key={ledger.nominalAccount.code} value={ledger.nominalAccount.code}>{ledger.nominalAccount.accountName + " - " + ledger.nominalAccount.code}</option>
@@ -246,7 +273,7 @@ export default function Journals() {
                     <option value="3000">Capital - 3000</option>
                     <option value="4400">Purchases - 4400</option>
                     <option value="5020">Advertising - 5020</option> */}
-                  </select>
+                  </select>                
                 </td>
                 <td className="px-2 py-2 text-gray-900 font-light border-r border-b">
                   <input
@@ -304,4 +331,7 @@ export default function Journals() {
       </div>
     </div>
   );
+
+
+  
 }

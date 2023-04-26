@@ -21,9 +21,30 @@ import TransactionsService from "../../services/transactionsService";
 // } as CounterState
 
 export const getTransactions = createAsyncThunk(
-  "transactions/getAll",
+  "transactions",
   async () => {
     return await TransactionsService.getAll();
+  }
+);
+
+export const createTransactions = createAsyncThunk(
+  "transactions/create",
+  async () => {
+    return await TransactionsService.create();
+  }
+);
+
+export const editTransactions = createAsyncThunk(
+  "transactions/edit",
+  async (transactions) => {
+    return await TransactionsService.edit(transactions);
+  }
+);
+
+export const deleteTransactions = createAsyncThunk(
+  "transactions/delete",
+  async () => {
+    return await TransactionsService.delete();
   }
 );
 
@@ -39,6 +60,24 @@ export const TransactionSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getTransactions.fulfilled, (state, action) => {
+      // console.log("action.payload: ", action.payload);
+      state.transactions = action.payload.transactions;
+      state.ledgers = action.payload.ledgers;
+      // console.log("state.transactions: ", state.transactions);
+    });
+    builder.addCase(createTransactions.fulfilled, (state, action) => {
+      // console.log("action.payload: ", action.payload);
+      state.transactions = action.payload.transactions;
+      state.ledgers = action.payload.ledgers;
+      // console.log("state.transactions: ", state.transactions);
+    });
+    builder.addCase(editTransactions.fulfilled, (state, action) => {
+      // console.log("action.payload: ", action.payload);
+      state.transactions = action.payload.transactions;
+      state.ledgers = action.payload.ledgers;
+      // console.log("state.transactions: ", state.transactions);
+    });
+    builder.addCase(deleteTransactions.fulfilled, (state, action) => {
       // console.log("action.payload: ", action.payload);
       state.transactions = action.payload.transactions;
       state.ledgers = action.payload.ledgers;

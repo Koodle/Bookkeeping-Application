@@ -11,57 +11,67 @@ exports.index = async (req, res) => {
   //append user ledgers
   let ledgers = await getLedgers(req.user.id);
 
-  // const transactions = await prisma.transactions.findMany({
-  //   where: {
-  //     userID: req.user.id,you
-  //   },
-  // });
-
   res.send({ transactions: transactions, ledgers: ledgers });
 };
 
 /*create a new transaction*/
 exports.create = async (req, res) => {
   console.log("transactions/create");
-  console.log(req.body.data);
+  // console.log(req.body.data);
   // console.log(req.user);
   try {
     //loop through transactions array
     //save new transactions
     async function f() {
-      await req.body.data.forEach(async (transaction) => {
-        const create = await prisma.transactions.create({
-          data: {
-            nominalAccountID: parseInt(transaction.nominalAccountID),
-            entryType: transaction.entryType,
-            transactionDate: new Date(transaction.transactionDate),
-            description: transaction.description,
-            amount: parseFloat(transaction.amount),
-            userID: req.user.id,
-          },
-        });
-        console.log(create); //FIXME: update the doubleEntryID field using create object return value. The ids for both newly created transactions will be here.
+
+      let lastTrans = await prisma.transactions.findFirst({
+        take: -1,
+        where: {
+          userID: req.user.id
+        }
+      });
+
+      await req.body.data.forEach(async (transaction, index) => {
+        if (index === 0){
+          let create = await prisma.transactions.create({
+            data: {
+              nominalAccountID: parseInt(transaction.nominalAccountID),
+              entryType: transaction.entryType,
+              transactionDate: new Date(transaction.transactionDate),
+              description: transaction.description,
+              amount: parseFloat(transaction.amount),
+              userID: req.user.id,
+              reference: transaction.reference,
+              doubleEntryID: lastTrans.id + 2
+            },
+          });
+        }else {
+          let create = await prisma.transactions.create({
+            data: {
+              nominalAccountID: parseInt(transaction.nominalAccountID),
+              entryType: transaction.entryType,
+              transactionDate: new Date(transaction.transactionDate),
+              description: transaction.description,
+              amount: parseFloat(transaction.amount),
+              userID: req.user.id,
+              reference: transaction.reference,
+              doubleEntryID: lastTrans.id + 1
+            },
+          });
+        }
       });
     }
 
-    //TODO: save newly created transaction ID
-
-    //TODO: assign double entry by editing both records
-
-    //FIXME: Doesn't return the last record in table!
-
-    //return updated transactions
-    await f().then(async () => {
+    await f().then(async() => {
+      //return updated transactions
       const newTransactions = await prisma.transactions.findMany({
         where: {
           userID: req.user.id,
         },
       });
-
       res.send(newTransactions);
     });
 
-    // res.send("newTransactions");
   } catch (e) {
     return res.status(500).json({ status: "Error", message: e.message }); //500 internal server error
   }
@@ -74,14 +84,14 @@ exports.deleteTransactions = async (req, res) => {
     console.log(req.body);
     console.log(req.user);
 
-    req.body.transactions.forEach(async (element) => {
-      const deleteTransaction = await prisma.transactions.delete({
-        where: {
-          id: element.id,
-          // userID: req.user.id,
-        },
-      });
-    });
+    // req.body.transactions.forEach(async (element) => {
+    //   const deleteTransaction = await prisma.transactions.delete({
+    //     where: {
+    //       id: element.id,
+    //       // userID: req.user.id,
+    //     },
+    //   });
+    // });
 
     //TODO:
     //1) find both transactions where the userID is same as that taken from token & transaction ID matches the one sent
@@ -90,12 +100,13 @@ exports.deleteTransactions = async (req, res) => {
     //FIXME: transactions and ledgers are not updated need to use .then(), if i call get transactions they are deleted
 
     //append transactions
-    let transactions = await getTransactions(req.user.id);
+    // let transactions = await getTransactions(req.user.id);
 
-    //append ledgers
-    let ledgers = await getLedgers(req.user.id);
+    // //append ledgers
+    // let ledgers = await getLedgers(req.user.id);
 
-    res.send({ transactions: transactions, ledgers: ledgers });
+    // res.send({ transactions: transactions, ledgers: ledgers });
+    res.send("hi")
   } catch (e) {
     return res.status(500).json({ status: "Error", message: e.message });
   }
@@ -103,30 +114,51 @@ exports.deleteTransactions = async (req, res) => {
 
 /*edit transactions*/
 exports.editTransactions = async (req, res) => {
-  console.log("transactions/delete");
-
+  console.log("transactions/edit");
+  
   try {
-    req.transactions.forEach((element) => {
-      //find ID
-      //make edit
-    });
+    console.log(req.body.transactions);
+    // console.log(req.user);
 
-    //TODO: check if transaction is found
-    //check if user found
-    // if (!user) {
-    //   console.log("not found");
-    //   return res.status(404).json({ message: "user not found" });
-    // }
+    async function f() {
+      await req.body.transactions.forEach(async (element) => {
 
-    //return transactions
-    let transactions = await getTransactions(req.user.id);
+        //remove IDs
+        elementWithoutID = {...element}
+        delete elementWithoutID["id"]
+        delete elementWithoutID["userID"]
+    
+        // //correct date format
+        // elementWithoutID["transactionDate"] = new Date(element.transactionDate)
 
-    //return ledgers
-    let ledgers = await getLedgers(req.user.id);
+        // //parse float for amount
+        // elementWithoutID["amount"] = parseFloat(element.amount)
 
-    //TODO:return success or failure
+        console.log(elementWithoutID);
 
-    res.send({ transactions: transactions, ledgers: ledgers });
+        const updateTransaction = await prisma.transactions.update({
+          where: {
+            id: element.id
+          },
+          data: elementWithoutID
+        })
+        console.log(updateTransaction); //FIXME: update the doubleEntryID field using create object return value. The ids for both newly created transactions will be here.
+      });
+    }
+
+    //return updated transactions
+    await f().then(async () => {
+    
+      //return transactions
+      let transactions = await getTransactions(req.user.id);
+
+      //return ledgers
+      let ledgers = await getLedgers(req.user.id);
+
+      //TODO:return success or failure
+
+      res.send({ transactions: transactions, ledgers: ledgers });
+    })
   } catch (e) {
     return res.status(500).json({ status: "Error", message: e.message });
   }
@@ -134,12 +166,24 @@ exports.editTransactions = async (req, res) => {
 
 //TODO: this should be done by date order, then will be shown in dashboard
 const getTransactions = async (id) => {
+  // const transactions = await prisma.transactions.findMany({
+  //   where: {
+  //     userID: id,
+  //   },
+  // });
+  // return transactions;
+
   const transactions = await prisma.transactions.findMany({
+    orderBy: [
+      {
+        reference: "asc",
+      }
+    ],
     where: {
       userID: id,
-    },
+    }
   });
-  return transactions;
+  return transactions
 };
 
 const getLedgers = async (id) => {
@@ -151,7 +195,7 @@ const getLedgers = async (id) => {
         nominalAccountID: "asc",
       },
       {
-        transactionDate: "asc",
+        reference: "asc",
       },
     ],
     where: {

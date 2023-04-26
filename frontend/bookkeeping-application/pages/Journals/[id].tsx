@@ -7,10 +7,12 @@ import TransactionsService from "../../services/transactionsService";
 
 //redux
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
+import { editTransactions, getTransactions } from "../../store/slices/transactionsSlice";
 
 //router
 import Link from "next/link";
 import { useRouter } from "next/router";
+
 
 function findTransactionsFromID(id: any, transactions: any) {
   let Id = parseInt(id);
@@ -119,6 +121,8 @@ export default function Ledgers() {
   // const [debit2, setDebit2] = useState<any>(0);
   // const [credit2, setCredit2] = useState<any>(0);
 
+  const dispatch = useAppDispatch();
+
   function submitJournals() {
     console.log("submit");
 
@@ -129,38 +133,38 @@ export default function Ledgers() {
     // create json object
 
     let transactions = {
-      data: [
+      transactions: [
         {
-          nominalAccountID: account1,
+          id: trans1.id,
+          nominalAccountID: parseInt(account1),
           entryType: debit1 == 1 ? "Debit" : "Credit",
-          transactionDate: date1,
+          transactionDate: new Date(date1),
           description: description1,
-          amount: amount1,
+          amount: parseFloat(amount1),
         },
         {
-          nominalAccountID: account2,
+          id: trans2.id,
+          nominalAccountID: parseInt(account2),
           entryType: debit2 == 1 ? "Debit" : "Credit",
-          transactionDate: date2,
+          transactionDate: new Date(date2),
           description: description2,
-          amount: amount2,
+          amount: parseFloat(amount2),
         },
       ],
     };
 
-    // console.log(transactions);
+  
+    // dispatch(editTransactions(transactions)).then(() => {
+    // });
 
-    TransactionsService.create(
-      //FIXME: get from the login page once built
+    //make api request
+    TransactionsService.edit(
       transactions
     ).then((res) => {
-      // console.log(res.ledgers);
-      //   setLedgers(res.ledgers);
-      console.log(res);
+      //update store
+      dispatch(getTransactions())
     });
 
-    // array.forEach(element => {
-
-    // });
   }
 
   function deleteJournals() {
@@ -225,7 +229,7 @@ export default function Ledgers() {
                   <input
                     className="block w-full p-1"
                     type="text"
-                    onChange={(e) => setDescription1(e.target.value)}
+                    onChange={(e) => {setDescription1(e.target.value); setDescription2(e.target.value);}}
                     defaultValue={description1}
                   />
                 </td>
@@ -304,8 +308,8 @@ export default function Ledgers() {
                   <input
                     className="block w-full p-1"
                     type="text"
-                    onChange={(e) => setDescription2(e.target.value)}
-                    defaultValue={description2}
+                    value={description2}
+                    disabled={true}
                   />
                 </td>
                 <td className="px-2 py-2 text-gray-900 font-light border-r border-b">
