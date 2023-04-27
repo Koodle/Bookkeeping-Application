@@ -64,35 +64,7 @@ export default function Ledgers() {
                     aria-label="Search"
                     aria-describedby="button-addon1" 
                     onChange={(e)=> setSearchBarText(e.target.value)}
-                    />
-                    {/* <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className="h-5 w-5 mx-auto my-auto mr-1">
-                      <path
-                        fill-rule="evenodd"
-                        d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                        clip-rule="evenodd" />
-                    </svg> */}
-                  {/* <button
-                    className="relative z-[2] flex items-center rounded-r bg-cyan-600 px-6 py-2.5 text-xs text-white"
-                    type="button"
-                    id="button-addon1"
-                    data-te-ripple-init
-                    data-te-ripple-color="light">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className="h-5 w-5">
-                      <path
-                        fill-rule="evenodd"
-                        d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                        clip-rule="evenodd" />
-                    </svg>
-                  </button> */}
-                  
+                    />                 
                 </div>
             </div>
             
@@ -211,15 +183,13 @@ export default function Ledgers() {
                               };
 
                               //find double entrys                            
-                              // let nominalAccountID = undefined
-                              // Object.values(transactionsFromState).forEach((transactionState: any) => {
-                              //   if (transactionState.id == transaction.id){
-                              //     nominalAccountID = transactionState.nominalAccountID
-                              //     return 
-                              //   }
-                              // })
-                              // console.log(nominalAccountID);
-                              // return nominalAccountID
+                              let double_entry_info = -1
+                              Object.values(transactionsFromState).forEach((transactionState: any) => {
+                                // console.log(transactionState.reference);
+                                if (transactionState.reference == transaction.doubleEntryID){
+                                  double_entry_info = transactionState.reference
+                                }
+                              })
                               
                               
                               return (
@@ -237,7 +207,7 @@ export default function Ledgers() {
                                     {/* TODO-DoubleEntry */}
                                     <Link href={"/Ledgers#" + transaction.doubleEntryID}>
                                     <td className="px-2 pt-2">
-                                      {transaction.doubleEntryID}
+                                      {double_entry_info}
                                     </td>
                                   </Link>
                                   </td>
@@ -294,6 +264,15 @@ export default function Ledgers() {
                                 );
                               };
 
+                              //find double entrys                            
+                              let double_entry_info = -1
+                              Object.values(transactionsFromState).forEach((transactionState: any) => {
+                                // console.log(transactionState.reference);
+                                if (transactionState.reference == transaction.doubleEntryID){
+                                  double_entry_info = transactionState.reference
+                                }
+                              })
+
                               return (
                                 <tr className="border-b" key={transaction.id} id={transaction.id}>
                                   <td className=" text-xs px-2 py-2 text-gray-900 font-light border-r ">
@@ -306,7 +285,10 @@ export default function Ledgers() {
                                     {transaction.description}
                                   </td>
                                   <td className="text-xs text-gray-900 font-light px-2 py-2 border-r">
-                                    TODO-DoubleEntry
+                                    {/* TODO-DoubleEntry */}
+                                    <Link href={"/Ledgers#" + transaction.doubleEntryID}>
+                                      {double_entry_info}
+                                    </Link>
                                   </td>
                                   <td className="text-xs text-gray-900 font-light px-2 py-2 border-r ">
                                     {transaction.amount}

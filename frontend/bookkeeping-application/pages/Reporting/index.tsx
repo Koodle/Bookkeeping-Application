@@ -57,7 +57,7 @@ export default function Ledgers() {
         <SideBar />
       </div>
 
-      <div className="fixed ml-44 bg-orange-300">filters: date/YE, Download to excell or pdf</div>
+      {/* <div className="fixed ml-44 bg-orange-300">filters: date/YE, Download to excell or pdf</div> */}
 
       <div className="ml-44 box-border h-screen bg-gray-200 pl-4">
         

@@ -24,12 +24,12 @@ exports.create = async (req, res) => {
     //save new transactions
     async function f() {
 
-      let lastTrans = await prisma.transactions.findFirst({
-        take: -1,
-        where: {
-          userID: req.user.id
-        }
-      });
+      // let lastTrans = await prisma.transactions.findFirst({
+      //   take: -1,
+      //   where: {
+      //     userID: req.user.id
+      //   }
+      // });
 
       await req.body.data.forEach(async (transaction, index) => {
         if (index === 0){
@@ -42,7 +42,7 @@ exports.create = async (req, res) => {
               amount: parseFloat(transaction.amount),
               userID: req.user.id,
               reference: transaction.reference,
-              doubleEntryID: lastTrans.id + 2
+              // doubleEntryID: lastTrans.id + 2
             },
           });
         }else {
@@ -55,7 +55,7 @@ exports.create = async (req, res) => {
               amount: parseFloat(transaction.amount),
               userID: req.user.id,
               reference: transaction.reference,
-              doubleEntryID: lastTrans.id + 1
+              // doubleEntryID: lastTrans.id + 1
             },
           });
         }
@@ -63,6 +63,46 @@ exports.create = async (req, res) => {
     }
 
     await f().then(async() => {
+
+      // const trans1 = await prisma.transactions.findFirst({
+      //   take: -1,
+      //   where:{
+      //     userID: req.user.id
+      //   }
+      // })
+
+      // const trans2 = await prisma.transactions.findFirst({
+      //   skip: 1,
+      //   take: -1,
+      //   where:{
+      //     userID: req.user.id
+      //   }
+      // })
+
+      // const updateTransaction1 = await prisma.transactions.update({
+      //   where: {
+      //     id: trans1.id
+      //   },
+      //   data: {
+      //     doubleEntryID: trans2.id
+      //   }
+      // })
+
+      // const updateTransaction2 = await prisma.transactions.update({
+      //   where: {
+      //     id: trans2.id
+      //   },
+      //   data: {
+      //     doubleEntryID: trans1.id
+      //   }
+      // })
+
+      // console.log("trans1", trans1);
+      // console.log("trans2", trans2);
+
+      // console.log("updateTransaction1", updateTransaction1);
+      // console.log("updateTransaction1", updateTransaction2);
+
       //return updated transactions
       const newTransactions = await prisma.transactions.findMany({
         where: {
@@ -70,8 +110,10 @@ exports.create = async (req, res) => {
         },
       });
       res.send(newTransactions);
+
     });
 
+  
   } catch (e) {
     return res.status(500).json({ status: "Error", message: e.message }); //500 internal server error
   }

@@ -10,7 +10,7 @@ import { log } from "console";
 
 //redux
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
-import { getTransactions } from "../../store/slices/transactionsSlice";
+import { editTransactions, getTransactions } from "../../store/slices/transactionsSlice";
 
 export default function Journals() {
   //TODO: form validation
@@ -103,7 +103,22 @@ export default function Journals() {
       //show notification of success OR clear inputs
       
       //clear inputs
-      clearInputs()
+      // clearInputs()
+
+
+      console.log("transactionsFromState", transactionsFromState);
+      
+      
+
+      // //double entry fix
+      // TransactionsService.edit(
+      //   DoubleEntryTransactions
+      // ).then((res) => {
+      //   //update store
+      //   dispatch(getTransactions())
+      // });
+
+
     });
   }
 

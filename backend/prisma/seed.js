@@ -321,7 +321,7 @@ async function main() {
       {
         nominalAccountID: 4000,
         entryType: "Credit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-02-01"),
         description: "Sales",
         amount: 20.0,
         userID: 1,
@@ -331,7 +331,7 @@ async function main() {
       {
         nominalAccountID: 1000,
         entryType: "Debit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-02-01"),
         description: "Sales",
         amount: 20.0,
         userID: 1,
@@ -341,7 +341,7 @@ async function main() {
       {
         nominalAccountID: 4000,
         entryType: "Credit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-03-01"),
         description: "Sales",
         amount: 20.0,
         userID: 1,
@@ -351,7 +351,7 @@ async function main() {
       {
         nominalAccountID: 1000,
         entryType: "Debit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-03-01"),
         description: "Sales",
         amount: 20.0,
         userID: 1,
@@ -361,7 +361,7 @@ async function main() {
       {
         nominalAccountID: 4000,
         entryType: "Credit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-04-01"),
         description: "Sales",
         amount: 33.20,
         userID: 1,
@@ -371,7 +371,7 @@ async function main() {
       {
         nominalAccountID: 1000,
         entryType: "Debit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-04-01"),
         description: "Sales",
         amount: 33.20,
         userID: 1,
@@ -381,8 +381,8 @@ async function main() {
       //Purchases
       {
         nominalAccountID: 4400,
-        entryType: "Credit",
-        transactionDate: new Date("2022-01-01"),
+        entryType: "Debit",
+        transactionDate: new Date("2022-05-01"),
         description: "Purchase of Inventory",
         amount: 1000,
         userID: 1,
@@ -391,8 +391,8 @@ async function main() {
       },
       {
         nominalAccountID: 1000,
-        entryType: "Debit",
-        transactionDate: new Date("2022-01-01"),
+        entryType: "Credit",
+        transactionDate: new Date("2022-05-01"),
         description: "Purchase of Inventory",
         amount: 1000,
         userID: 1,
@@ -403,7 +403,7 @@ async function main() {
       {
         nominalAccountID: 1000,
         entryType: "Credit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-06-01"),
         description: "Google Advertising",
         amount: 25,
         userID: 1,
@@ -413,7 +413,7 @@ async function main() {
       {
         nominalAccountID: 5020,
         entryType: "Debit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-06-01"),
         description: "Google Advertising",
         amount: 25,
         userID: 1,
@@ -423,7 +423,7 @@ async function main() {
       {
         nominalAccountID: 1000,
         entryType: "Credit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-07-01"),
         description: "CRM software fee",
         amount: 20,
         userID: 1,
@@ -433,7 +433,7 @@ async function main() {
       {
         nominalAccountID: 5260,
         entryType: "Debit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-07-01"),
         description: "CRM software fee",
         amount: 20,
         userID: 1,
@@ -443,7 +443,7 @@ async function main() {
       {
         nominalAccountID: 1000,
         entryType: "Credit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-08-01"),
         description: "Royal Mail Postage",
         amount: 5,
         userID: 1,
@@ -453,7 +453,7 @@ async function main() {
       {
         nominalAccountID: 5360,
         entryType: "Debit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-08-01"),
         description: "Royal Mail Postage",
         amount: 5,
         userID: 1,
@@ -463,7 +463,7 @@ async function main() {
       {
         nominalAccountID: 1000,
         entryType: "Credit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-09-01"),
         description: "Royal Mail Postage",
         amount: 5,
         userID: 1,
@@ -473,7 +473,7 @@ async function main() {
       {
         nominalAccountID: 5360,
         entryType: "Debit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-09-01"),
         description: "Royal Mail Postage",
         amount: 5,
         userID: 1,
@@ -483,7 +483,7 @@ async function main() {
       {
         nominalAccountID: 1000,
         entryType: "Credit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-10-01"),
         description: "Royal Mail Postage",
         amount: 5,
         userID: 1,
@@ -493,7 +493,7 @@ async function main() {
       {
         nominalAccountID: 5360,
         entryType: "Debit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-10-01"),
         description: "Royal Mail Postage",
         amount: 5,
         userID: 1,
@@ -504,7 +504,7 @@ async function main() {
       {
         nominalAccountID: 1000,
         entryType: "Debit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-11-01"),
         description: "Consulting fee",
         amount: 150.0,
         userID: 1,
@@ -514,7 +514,7 @@ async function main() {
       {
         nominalAccountID: 4010,
         entryType: "Credit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-11-01"),
         description: "Consulting fee",
         amount: 150.0,
         userID: 1,
@@ -526,7 +526,7 @@ async function main() {
       {
         nominalAccountID: 1800,
         entryType: "Debit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-03-01"),
         description: "New Property",
         amount: 150.0,
         userID: 1,
@@ -536,7 +536,7 @@ async function main() {
       {
         nominalAccountID: 1000,
         entryType: "Credit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-03-01"),
         description: "New Property",
         amount: 150.0,
         userID: 1,
@@ -546,7 +546,7 @@ async function main() {
       {
         nominalAccountID: 4400,
         entryType: "Debit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-02-01"),
         description: "Purchase on credit",
         amount: 23.99,
         userID: 1,
@@ -556,7 +556,7 @@ async function main() {
       {
         nominalAccountID: 2000,
         entryType: "Credit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-02-01"),
         description: "Purchase on credit",
         amount: 23.99,
         userID: 1,
@@ -566,7 +566,7 @@ async function main() {
       {
         nominalAccountID: 1000,
         entryType: "Debit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-11-01"),
         description: "Bank Loan",
         amount: 2000,
         userID: 1,
@@ -576,7 +576,7 @@ async function main() {
       {
         nominalAccountID: 2600,
         entryType: "Credit",
-        transactionDate: new Date("2022-01-01"),
+        transactionDate: new Date("2022-11-01"),
         description: "Bank Loan",
         amount: 2000,
         userID: 1,
