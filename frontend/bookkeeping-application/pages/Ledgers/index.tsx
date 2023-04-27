@@ -170,7 +170,11 @@ export default function Ledgers() {
                             </tr>
                           </thead>
                           <tbody>
-                            {ledger.Debit.map((transaction: any) => {
+                            {ledger.Debit.slice().sort((a:any, b:any) => {
+                              let date1 = new Date(Date.parse(a.transactionDate))
+                              let date2 = new Date(Date.parse(b.transactionDate))
+                              return date1 - date2
+                            }).map((transaction: any) => {
                               let getDate = (strDate: string) => {
                                 let date = new Date(Date.parse(strDate));
                                 return (
@@ -252,7 +256,11 @@ export default function Ledgers() {
                             </tr>
                           </thead>
                           <tbody>
-                            {ledger.Credit.map((transaction: any) => {
+                            {ledger.Credit.slice().sort((a:any, b:any) => {
+                              let date1 = new Date(Date.parse(a.transactionDate))
+                              let date2 = new Date(Date.parse(b.transactionDate))
+                              return date1 - date2
+                            }).map((transaction: any) => {
                               let getDate = (strDate: string) => {
                                 let date = new Date(Date.parse(strDate));
                                 return (

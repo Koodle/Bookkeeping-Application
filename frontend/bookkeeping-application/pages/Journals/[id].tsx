@@ -33,6 +33,7 @@ function findTransactionsFromID(id: any, transactions: any) {
   if (trans1 != null && trans1.doubleEntryID != null) {
     transactions.forEach((element: any) => {
       if (element.id === trans1.doubleEntryID) {
+        console.log("tranaction 2: ", element);
         trans2 = element;
       }
     });
@@ -52,9 +53,6 @@ export default function Ledgers() {
   const ledgersFromState = useAppSelector(
     (state) => state.transactions.ledgers
   );
-
-  //Accounts drop down search bar
-  const [searchBarText, setSearchBarText] = useState<any>("");
 
   //two trans
   const [trans1, setTrans1] = useState<any>(
@@ -123,8 +121,13 @@ export default function Ledgers() {
 
   const dispatch = useAppDispatch();
 
-  function submitJournals() {
+  function submitJournals(id : any) {
     console.log("submit");
+
+    console.log("id");
+    console.log(id);
+    
+    
 
     //When you hit submit you read each table row and add to an array of double entry or single entry transactions.
 
@@ -153,16 +156,22 @@ export default function Ledgers() {
       ],
     };
 
-  
+    console.log(transactions);
+
     // dispatch(editTransactions(transactions)).then(() => {
     // });
 
     //make api request
+    
     TransactionsService.edit(
       transactions
     ).then((res) => {
       //update store
       dispatch(getTransactions())
+
+      //navigate
+      router.push("/Ledgers#"+""+id)
+
     });
 
   }
@@ -171,7 +180,6 @@ export default function Ledgers() {
     console.log("delete");
     //1) get Ids for both transactions
     //2) delete both transactions
-
   }
 
   return (
@@ -383,7 +391,7 @@ export default function Ledgers() {
           </button>
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-20"
-            onClick={submitJournals}
+            onClick={() => submitJournals(id)}
           >
             Save
           </button>

@@ -408,7 +408,7 @@ async function main() {
         amount: 25,
         userID: 1,
         reference: 11,
-        doubleEntryID: 11,
+        doubleEntryID: 12,
       },
       {
         nominalAccountID: 5020,
@@ -418,7 +418,7 @@ async function main() {
         amount: 25,
         userID: 1,
         reference: 12,
-        doubleEntryID: 12,
+        doubleEntryID: 11,
       },
       {
         nominalAccountID: 1000,
@@ -448,7 +448,7 @@ async function main() {
         amount: 5,
         userID: 1,
         reference: 15,
-        doubleEntryID: 15,
+        doubleEntryID: 16,
       },
       {
         nominalAccountID: 5360,
@@ -458,7 +458,7 @@ async function main() {
         amount: 5,
         userID: 1,
         reference: 16,
-        doubleEntryID: 16,
+        doubleEntryID: 15,
       },
       {
         nominalAccountID: 1000,

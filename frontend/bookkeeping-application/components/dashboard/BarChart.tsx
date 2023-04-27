@@ -84,9 +84,8 @@ export default function BarChart() {
 
         let balance = debitBalance - creditBalance;
 
-        console.log("expenses balance - Month", currentMonth );
-        
-        console.log(balance);
+        // console.log("expenses balance - Month", currentMonth );        
+        // console.log(balance);
 
         //if positive then subtract
         if (balance > 0) {
@@ -175,8 +174,7 @@ export default function BarChart() {
     //reveue
     if (ledger.nominalAccount.groupName === "Income") {
 
-      console.log("ledger", ledger.nominalAccount.accountName);
-      
+      // console.log("ledger", ledger.nominalAccount.accountName);
 
       //loop for each month
       for (let currentMonth = 0; currentMonth < 12; currentMonth++) {
@@ -215,9 +213,8 @@ export default function BarChart() {
 
         let balance = debitBalance - creditBalance;
 
-        console.log("Income balance - Month", currentMonth );
-        
-        console.log(balance);
+        // console.log("Income balance - Month", currentMonth );
+        // console.log(balance);
 
         //if negative then add
         if (balance < 0) {
@@ -303,8 +300,8 @@ export default function BarChart() {
       }
   }})
 
-  console.log("statements");
-  console.log(statements);
+  // console.log("statements");
+  // console.log(statements);
 
   const options = {
     responsive: false,
