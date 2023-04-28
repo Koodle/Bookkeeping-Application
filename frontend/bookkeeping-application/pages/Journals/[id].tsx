@@ -124,8 +124,8 @@ export default function Ledgers() {
   function submitJournals(id : any) {
     console.log("submit");
 
-    console.log("id");
-    console.log(id);
+    // console.log("id");
+    // console.log(id);
     
     
 
@@ -134,7 +134,6 @@ export default function Ledgers() {
     //TODO: validate data
 
     // create json object
-
     let transactions = {
       transactions: [
         {
@@ -162,24 +161,48 @@ export default function Ledgers() {
     // });
 
     //make api request
-    
+
     TransactionsService.edit(
       transactions
     ).then((res) => {
       //update store
       dispatch(getTransactions())
 
-      //navigate
+      //navigate to transaction
       router.push("/Ledgers#"+""+id)
 
     });
 
   }
 
-  function deleteJournals() {
+  function deleteJournals(id: any) {
     console.log("delete");
-    //1) get Ids for both transactions
-    //2) delete both transactions
+    
+
+    // create json object
+    let transactions = {
+      transactions: [
+        {
+          id: trans1.id,
+        },
+        {
+          id: trans2.id,
+        },
+      ],
+    };
+
+    console.log(transactions);
+
+    TransactionsService.delete(
+      transactions
+    ).then((res) => {
+      //update store
+      dispatch(getTransactions())
+
+      //navigate to ledger
+      router.push("/Ledgers#"+""+parseInt(account1))
+    });
+
   }
 
   return (
@@ -385,7 +408,7 @@ export default function Ledgers() {
         <div className="ml-auto w-fit mr-6 mt-4">
           <button
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-20 mr-9"
-            onClick={deleteJournals}
+            onClick={() => deleteJournals(id)}
           >
             Delete
           </button>

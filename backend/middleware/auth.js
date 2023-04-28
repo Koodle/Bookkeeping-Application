@@ -4,6 +4,7 @@ const config = require("../config/app");
 //Create auth Middleware to check if any token was passed with the /users/update request & then check if token is valid
 
 exports.auth = (req, res, next) => {
+
   //check the requests header to find the JWT Bearer Token
   const authHeader = req.headers["authorization"];
   // console.log("authheader");

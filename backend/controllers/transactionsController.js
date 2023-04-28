@@ -17,7 +17,7 @@ exports.index = async (req, res) => {
 /*create a new transaction*/
 exports.create = async (req, res) => {
   console.log("transactions/create");
-  // console.log(req.body.data);
+  console.log("req.body.data ", req.body.data);
   // console.log(req.user);
   try {
     //loop through transactions array
@@ -31,78 +31,118 @@ exports.create = async (req, res) => {
       //   }
       // });
 
-      await req.body.data.forEach(async (transaction, index) => {
-        if (index === 0){
-          let create = await prisma.transactions.create({
-            data: {
-              nominalAccountID: parseInt(transaction.nominalAccountID),
-              entryType: transaction.entryType,
-              transactionDate: new Date(transaction.transactionDate),
-              description: transaction.description,
-              amount: parseFloat(transaction.amount),
-              userID: req.user.id,
-              reference: transaction.reference,
-              // doubleEntryID: lastTrans.id + 2
-            },
-          });
-        }else {
-          let create = await prisma.transactions.create({
-            data: {
-              nominalAccountID: parseInt(transaction.nominalAccountID),
-              entryType: transaction.entryType,
-              transactionDate: new Date(transaction.transactionDate),
-              description: transaction.description,
-              amount: parseFloat(transaction.amount),
-              userID: req.user.id,
-              reference: transaction.reference,
-              // doubleEntryID: lastTrans.id + 1
-            },
-          });
-        }
-      });
+      console.log("inside f");
+
+
+      let create = await prisma.transactions.createMany({
+        data: [
+          {
+            nominalAccountID: parseInt(req.body.data[0].nominalAccountID),
+            entryType: req.body.data[0].entryType,
+            transactionDate: new Date(req.body.data[0].transactionDate),
+            description: req.body.data[0].description,
+            amount: parseFloat(req.body.data[0].amount),
+            userID: req.user.id,
+            reference: req.body.data[0].reference,
+            // doubleEntryID: lastTrans.id + 2
+          },
+          {
+            nominalAccountID: parseInt(req.body.data[1].nominalAccountID),
+            entryType: req.body.data[1].entryType,
+            transactionDate: new Date(req.body.data[1].transactionDate),
+            description: req.body.data[1].description,
+            amount: parseFloat(req.body.data[1].amount),
+            userID: req.user.id,
+            reference: req.body.data[1].reference,
+            // doubleEntryID: lastTrans.id + 2
+          }
+        ]
+      })
+
+      // for (let index = 0; index < req.body.data.length; index++) {
+
+        // console.log("loop, " + index);
+
+      //   if (index === 0){
+      //     console.log("first trans");
+      //     let create = await prisma.transactions.create({
+      //       data: {
+      //         nominalAccountID: parseInt(transaction.nominalAccountID),
+      //         entryType: transaction.entryType,
+      //         transactionDate: new Date(transaction.transactionDate),
+      //         description: transaction.description,
+      //         amount: parseFloat(transaction.amount),
+      //         userID: req.user.id,
+      //         reference: transaction.reference,
+      //         // doubleEntryID: lastTrans.id + 2
+      //       }
+      //     })
+      //   }else {
+      //     console.log("second trans");
+      //     let create = await prisma.transactions.create({
+      //       data: {
+      //         nominalAccountID: parseInt(transaction.nominalAccountID),
+      //         entryType: transaction.entryType,
+      //         transactionDate: new Date(transaction.transactionDate),
+      //         description: transaction.description,
+      //         amount: parseFloat(transaction.amount),
+      //         userID: req.user.id,
+      //         reference: transaction.reference,
+      //         // doubleEntryID: lastTrans.id + 1
+      //       },
+      //     })
+      //   }
+      // }
+      // console.log("created!");
     }
 
-    await f().then(async() => {
+    await f().then( async()=>{
 
-      // const trans1 = await prisma.transactions.findFirst({
-      //   take: -1,
-      //   where:{
-      //     userID: req.user.id
-      //   }
-      // })
+      console.log("update double entry ID");
 
-      // const trans2 = await prisma.transactions.findFirst({
-      //   skip: 1,
-      //   take: -1,
-      //   where:{
-      //     userID: req.user.id
-      //   }
-      // })
+      const trans1 = await prisma.transactions.findFirst({
+        take: -1,
+        where:{
+          userID: req.user.id
+        }
+      })
 
-      // const updateTransaction1 = await prisma.transactions.update({
-      //   where: {
-      //     id: trans1.id
-      //   },
-      //   data: {
-      //     doubleEntryID: trans2.id
-      //   }
-      // })
+      console.log("trans1", trans1);
 
-      // const updateTransaction2 = await prisma.transactions.update({
-      //   where: {
-      //     id: trans2.id
-      //   },
-      //   data: {
-      //     doubleEntryID: trans1.id
-      //   }
-      // })
+      const trans2 = await prisma.transactions.findFirst({
+        skip: 1,
+        take: -1,
+        where:{
+          userID: req.user.id
+        }
+        })
 
-      // console.log("trans1", trans1);
-      // console.log("trans2", trans2);
+      console.log("trans2", trans2);
 
-      // console.log("updateTransaction1", updateTransaction1);
-      // console.log("updateTransaction1", updateTransaction2);
 
+      const updateTransaction1 = await prisma.transactions.update({
+        where: {
+          id: trans1.id
+        },
+        data: {
+          doubleEntryID: trans2.id
+        }
+      })
+
+      console.log("updateTransaction1", updateTransaction1);
+
+      const updateTransaction2 = await prisma.transactions.update({
+        where: {
+          id: trans2.id
+        },
+        data: {
+          doubleEntryID: trans1.id
+        }
+      })
+      
+      console.log("updateTransaction1", updateTransaction2);
+
+    }).then(async()=>{
       //return updated transactions
       const newTransactions = await prisma.transactions.findMany({
         where: {
@@ -110,9 +150,7 @@ exports.create = async (req, res) => {
         },
       });
       res.send(newTransactions);
-
-    });
-
+    })
   
   } catch (e) {
     return res.status(500).json({ status: "Error", message: e.message }); //500 internal server error
@@ -123,17 +161,17 @@ exports.create = async (req, res) => {
 exports.deleteTransactions = async (req, res) => {
   console.log("transactions/delete");
   try {
-    console.log(req.body);
+    console.log(req.body.transactions);
     console.log(req.user);
 
-    // req.body.transactions.forEach(async (element) => {
-    //   const deleteTransaction = await prisma.transactions.delete({
-    //     where: {
-    //       id: element.id,
-    //       // userID: req.user.id,
-    //     },
-    //   });
-    // });
+    req.body.transactions.forEach(async (element) => {
+      const deleteTransaction = await prisma.transactions.delete({
+        where: {
+          id: element.id,
+          // userID: req.user.id,
+        },
+      });
+    });
 
     //TODO:
     //1) find both transactions where the userID is same as that taken from token & transaction ID matches the one sent
@@ -142,13 +180,13 @@ exports.deleteTransactions = async (req, res) => {
     //FIXME: transactions and ledgers are not updated need to use .then(), if i call get transactions they are deleted
 
     //append transactions
-    // let transactions = await getTransactions(req.user.id);
+    let transactions = await getTransactions(req.user.id);
 
-    // //append ledgers
-    // let ledgers = await getLedgers(req.user.id);
+    //append ledgers
+    let ledgers = await getLedgers(req.user.id);
 
-    // res.send({ transactions: transactions, ledgers: ledgers });
-    res.send("hi")
+    res.send({ transactions: transactions, ledgers: ledgers });
+    // res.send("success")
   } catch (e) {
     return res.status(500).json({ status: "Error", message: e.message });
   }

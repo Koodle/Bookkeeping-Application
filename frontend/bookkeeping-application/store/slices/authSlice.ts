@@ -12,12 +12,17 @@ export const login = createAsyncThunk("/login", async () => {
   });
 });
 
+
+
 const initialState = {
-  // transactions: [], //TODO: get from local storage if exists
-  // ledgers: [],
   user: {},
   business: {},
 } as any;
+
+if (typeof window !== "undefined") {
+  initialState.user = localStorage.hasOwnProperty("user") ? JSON.parse(localStorage.getItem("user") || '{}') : {}
+  initialState.business = localStorage.hasOwnProperty("business") ? JSON.parse(localStorage.getItem("business") || '{}') : {}
+}
 
 export const AuthSlice = createSlice({
   name: "login",

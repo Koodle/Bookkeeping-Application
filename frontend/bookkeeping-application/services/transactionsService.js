@@ -13,6 +13,8 @@ const TransactionsService = {
   getAll: () => {
     return API.get("/transactions")
       .then((res) => {
+        console.log("get all transactions ", res.data);
+        saveToLocalStorage("transactions", res.data)
         return res.data;
       })
       .catch((err) => {
@@ -29,7 +31,8 @@ const TransactionsService = {
       });
   },
   delete: (data) => {
-    return API.delete("/transactions/delete", data)
+    console.log("data", data);
+    return API.delete("/transactions/delete", {data} )
       .then((res) => {
         return res.data;
       })
@@ -38,5 +41,11 @@ const TransactionsService = {
       });
   },
 };
+
+const saveToLocalStorage = (name, data) => {
+  //we cannot store a JS object. Must convert to string.
+  localStorage.setItem(name, JSON.stringify(data));
+};
+
 
 export default TransactionsService;

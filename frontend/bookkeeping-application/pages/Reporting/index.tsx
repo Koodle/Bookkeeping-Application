@@ -197,23 +197,6 @@ function organizeLedgersByAccount(ledgersFromState : any){
     } 
   }
 
-  // for (const subGroup in organizedLedgers.PL){
-  //   console.log(subGroup);
-    
-  //   //total balance for Subgroup
-  //   let totalBalance = subGroupBalance(Object.values(organizedLedgers.PL[subGroup]))
-  //   console.log("totalBalance");
-    
-  //   console.log(totalBalance);
-  //   console.log(organizedLedgers.PL[subGroup]
-  // }
-
-  // for (const subGroup in organizedLedgers.BS){
-  //   //total balance for Subgroup
-  //   let totalBalance = parseFloat(subGroupBalance(Object.values(organizedLedgers.BS[subGroup])))
-  //   organizedLedgers.BS[subGroup]["subGroupBalance"] = totalBalance
-  // }
-
   console.log("organizedLedgers", organizedLedgers);
   return organizedLedgers 
 }
@@ -250,12 +233,9 @@ function subGroupBalance(subGroup: any){
 }
 
 function getTotalProfit(subGroup: any) {
-
   let total = 0
-  
   Object.values(subGroup).map((ledgers)=>{
     total += subGroupBalance(ledgers)
   })
-
   return total;
 }

@@ -123,7 +123,7 @@ export default function Home() {
                           </thead>
                           <tbody>
 
-                          {Object.values(transactionsFromState.transactions).reverse().map((transaction: any) => {
+                          {transactionsFromState.transactions ? Object.values(transactionsFromState.transactions).reverse().map((transaction: any) => {
                               let getDate = (strDate: string) => {
                                 let date = new Date(Date.parse(strDate));                               
                                 return (
@@ -171,7 +171,7 @@ export default function Home() {
                                   </td>
                                 </tr>
                               );
-                            })}
+                            }): <></>}
 
                           </tbody>
                         </table>

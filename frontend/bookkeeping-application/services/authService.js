@@ -27,6 +27,7 @@ const AuthService = {
     //remove user&token from local storage
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+    localStorage.removeItem("transactions");
   },
 };
 
@@ -42,5 +43,7 @@ const setHeadersAndStorage = (user, token) => {
   localStorage.setItem("user", JSON.stringify(user));
   localStorage.setItem("token", JSON.stringify(token));
 };
+
+
 
 export default AuthService;
