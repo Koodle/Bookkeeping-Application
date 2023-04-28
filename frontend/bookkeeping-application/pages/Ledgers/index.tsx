@@ -187,11 +187,11 @@ export default function Ledgers() {
                               };
 
                               //find double entrys                            
-                              let double_entry_info = -1
+                              let double_entry_reference = -1
                               Object.values(transactionsFromState).forEach((transactionState: any) => {
-                                // console.log(transactionState.reference);
-                                if (transactionState.reference == transaction.doubleEntryID){
-                                  double_entry_info = transactionState.reference
+                                if (transactionState.id == transaction.doubleEntryID){
+                                  // console.log(transactionState.reference);
+                                  double_entry_reference = transactionState.reference
                                 }
                               })
                               
@@ -202,7 +202,7 @@ export default function Ledgers() {
                                     {getDate(transaction.transactionDate)}
                                   </td>
                                   <td className="text-xs text-gray-900 font-light px-2 py-2  border-r ">
-                                    {transaction.id}
+                                    {transaction.reference}
                                   </td>
                                   <td className="text-xs text-gray-900 font-light px-2 py-2  border-r">
                                     {transaction.description}
@@ -211,7 +211,7 @@ export default function Ledgers() {
                                     {/* TODO-DoubleEntry */}
                                     <Link href={"/Ledgers#" + transaction.doubleEntryID}>
                                     <td className="px-2 pt-2">
-                                      {double_entry_info}
+                                      {double_entry_reference}
                                     </td>
                                   </Link>
                                   </td>
@@ -273,11 +273,12 @@ export default function Ledgers() {
                               };
 
                               //find double entrys                            
-                              let double_entry_info = -1
+                              let double_entry_reference = -1
                               Object.values(transactionsFromState).forEach((transactionState: any) => {
                                 // console.log(transactionState.reference);
-                                if (transactionState.reference == transaction.doubleEntryID){
-                                  double_entry_info = transactionState.reference
+                                if (transactionState.id == transaction.doubleEntryID){
+                                  // console.log(transactionState.reference);
+                                  double_entry_reference = transactionState.reference
                                 }
                               })
 
@@ -287,7 +288,7 @@ export default function Ledgers() {
                                     {getDate(transaction.transactionDate)}
                                   </td>
                                   <td className="text-xs text-gray-900 font-light px-2 py-2  border-r ">
-                                    {transaction.id}
+                                    {transaction.reference}
                                   </td>
                                   <td className="text-xs text-gray-900 font-light px-2 py-2  border-r">
                                     {transaction.description}
@@ -295,7 +296,7 @@ export default function Ledgers() {
                                   <td className="text-xs text-gray-900 font-light px-2 py-2 border-r">
                                     {/* TODO-DoubleEntry */}
                                     <Link href={"/Ledgers#" + transaction.doubleEntryID}>
-                                      {double_entry_info}
+                                      {double_entry_reference}
                                     </Link>
                                   </td>
                                   <td className="text-xs text-gray-900 font-light px-2 py-2 border-r ">

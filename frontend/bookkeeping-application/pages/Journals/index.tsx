@@ -17,14 +17,22 @@ export default function Journals() {
 
   const transactionsFromState = useAppSelector((state: any) => state.transactions);
 
+  useEffect(() => {
+
+    setRef1(getlatestRef(transactionsFromState)+1)
+    setRef2(getlatestRef(transactionsFromState)+2)
+
+
+  }, [transactionsFromState]);
+
   function getlatestRef(transactions: any){
     // console.log("ref");
-    // console.log(transactions.transactions.slice(-1));
+    // console.log(transactions.transactions.slice(-1)); 
     return transactions.transactions.slice(-1).pop().reference
   }
 
   const [date1, setDate1] = useState<any>(new Date().toJSON().slice(0, 10));
-  const [ref1, setRef1] = useState<any>(getlatestRef(transactionsFromState)+1); //TODO: calculate this value
+  const [ref1, setRef1] = useState<any>(transactionsFromState != null ? getlatestRef(transactionsFromState)+1 : -20); //TODO: calculate this value
   const [description1, setDescription1] = useState<any>();
   const [account1, setAccount1] = useState<any>("1000");
   const [amount1, setAmount1] = useState<any>();
@@ -32,7 +40,7 @@ export default function Journals() {
   const [credit1, setCredit1] = useState<any>(0);
 
   const [date2, setDate2] = useState<any>(new Date().toJSON().slice(0, 10));
-  const [ref2, setRef2] = useState<any>(getlatestRef(transactionsFromState)+2);
+  const [ref2, setRef2] = useState<any>(transactionsFromState != null ? getlatestRef(transactionsFromState)+2 : -20);
   const [description2, setDescription2] = useState<any>();
   const [account2, setAccount2] = useState<any>("1000");
   const [amount2, setAmount2] = useState<any>();
@@ -105,19 +113,7 @@ export default function Journals() {
       //clear inputs
       // clearInputs()
 
-
       console.log("transactionsFromState", transactionsFromState);
-      
-      
-
-      // //double entry fix
-      // TransactionsService.edit(
-      //   DoubleEntryTransactions
-      // ).then((res) => {
-      //   //update store
-      //   dispatch(getTransactions())
-      // });
-
 
     });
   }

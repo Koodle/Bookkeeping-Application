@@ -156,7 +156,7 @@ export default function Ledgers() {
       
             <div className="flex border-b-2 my-auto pt-8">
               <h1 className="font-bold text-xl w-3/4">{getTotalProfit(organizedLedgers.PL) <= 0 ? "Profit" : "Loss"}</h1>
-              <div className="w-1/4 text-center font-bold">{Math.abs(getTotalProfit(organizedLedgers.PL))}</div>
+              <div className="w-1/4 text-center font-bold">{Math.abs(getTotalProfit(organizedLedgers.PL)).toFixed(2)}</div>
             </div>
             
           </div>          
