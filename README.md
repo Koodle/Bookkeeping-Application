@@ -1,6 +1,7 @@
 # Bookkeeping-Application
 
 This web application will allow you to record bookkeeping transactions for your business.
+
 It uses Next.js with TypeScript, Express.js, Node.js and PostgreSQL.
 
 ## Software Requirements
