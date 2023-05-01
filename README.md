@@ -9,7 +9,7 @@ It uses Next.js with TypeScript, Express.js, Node.js and PostgreSQL.
 -PostgreSQL
 -Node.js V18.15.0
 
-##Installation
+## Installation
 
 1. clone the repository
 2. navigate to ```\backend``` folder:
@@ -50,10 +50,10 @@ Files:
 
 ##Starting The Application
 
-###To start backend
+### To start backend
 Either click on the executable file ```backend-win.exe``` OR navigate to ```\backend``` and type ```npm start```
 
-###To start frontend
+### To start frontend
 
 Navigate to ```\frontend\Bookkeeping-Application``` folder:
 
