@@ -1,3 +1,5 @@
+"use client";
+
 import SideBar from "../../components/Layout/SideBar";
 
 //API
@@ -64,51 +66,52 @@ export default function Ledgers() {
 
   //form
   const [date1, setDate1] = useState<any>(
-    trans1.transactionDate
+    trans1
       ? new Date(trans1.transactionDate).toJSON().slice(0, 10)
       : new Date().toJSON().slice(0, 10)
   );
+  
   const [ref1, setRef1] = useState<any>(
-    trans1.reference ? trans1.reference : 1 //TODO: calculate this value
+    trans1 ? trans1.reference : 1 //TODO: calculate this value
   );
   const [description1, setDescription1] = useState<any>(
-    trans1.description ? trans1.description : ""
+    trans1 ? trans1.description : ""
   );
   const [account1, setAccount1] = useState<any>(
-    trans1.nominalAccountID ? trans1.nominalAccountID.toString() : "1000"
+    trans1 ? trans1.nominalAccountID.toString() : "1000"
   );
   const [amount1, setAmount1] = useState<any>(
-    trans1.amount ? trans1.amount : ""
+    trans1 ? trans1.amount : ""
   );
   const [debit1, setDebit1] = useState<any>(
-    trans1.entryType === "Debit" ? 1 : 0
+    trans1 ? trans1.entryType === "Debit" ? 1 : 0 : 0
   );
   const [credit1, setCredit1] = useState<any>(
-    trans1.entryType === "Credit" ? 1 : 0
+    trans1 ? trans1.entryType === "Credit" ? 1 : 0 : 0
   );
 
   const [date2, setDate2] = useState<any>(
-    trans2.transactionDate
+    trans2
       ? new Date(trans2.transactionDate).toJSON().slice(0, 10)
       : new Date().toJSON().slice(0, 10)
   );
   const [ref2, setRef2] = useState<any>(
-    trans2.reference ? trans2.reference : 1 //TODO: calculate this value
+    trans2 ? trans2.reference : 1 //TODO: calculate this value
   );
   const [description2, setDescription2] = useState<any>(
-    trans2.description ? trans2.description : ""
+    trans2 ? trans2.description : ""
   );
   const [account2, setAccount2] = useState<any>(
-    trans2.nominalAccountID ? trans2.nominalAccountID.toString() : "1000"
+    trans2 ? trans2.nominalAccountID.toString() : "1000"
   );
   const [amount2, setAmount2] = useState<any>(
-    trans2.amount ? trans2.amount : ""
+    trans2 ? trans2.amount : ""
   );
   const [debit2, setDebit2] = useState<any>(
-    trans2.entryType === "Debit" ? 1 : 0
+    trans2 ? trans2.entryType === "Debit" ? 1 : 0 : 0
   );
   const [credit2, setCredit2] = useState<any>(
-    trans2.entryType === "Credit" ? 1 : 0
+    trans2 ? trans2.entryType === "Credit" ? 1 : 0 : 0
   );
 
   // const [date2, setDate2] = useState<any>(new Date().toJSON().slice(0, 10));
@@ -166,13 +169,13 @@ export default function Ledgers() {
       transactions
     ).then((res) => {
       //update store
-      dispatch(getTransactions())
+      dispatch(getTransactions()).then( () => {
 
-      //navigate to transaction
-      router.push("/Ledgers#"+""+id)
+        //navigate to transaction
+        router.push("/Ledgers#"+""+id)
 
+      })
     });
-
   }
 
   function deleteJournals(id: any) {

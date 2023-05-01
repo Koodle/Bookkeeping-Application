@@ -30,6 +30,7 @@
     "jspdf": "^2.5.1",
     "next": "^13.0.7",
     "next-redux-wrapper": "^8.1.0",
+    "pkg": "^5.8.1",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.1.0",
     "react-dom": "^18.2.0",

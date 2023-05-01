@@ -19,10 +19,10 @@ const initialState = {
   business: {},
 } as any;
 
-if (typeof window !== "undefined") {
-  initialState.user = localStorage.hasOwnProperty("user") ? JSON.parse(localStorage.getItem("user") || '{}') : {}
-  initialState.business = localStorage.hasOwnProperty("business") ? JSON.parse(localStorage.getItem("business") || '{}') : {}
-}
+// if (typeof window !== "undefined") {
+//   initialState.user = localStorage.hasOwnProperty("user") ? JSON.parse(localStorage.getItem("user") || '{}') : {}
+//   initialState.business = localStorage.hasOwnProperty("business") ? JSON.parse(localStorage.getItem("business") || '{}') : {}
+// }
 
 export const AuthSlice = createSlice({
   name: "login",

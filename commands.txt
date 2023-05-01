@@ -9,7 +9,6 @@ APP_KEY=b1183f932273abc7384235db29245393643b2b8eadd4d229e44567439e11488124af01b1
 4 make sure you have Postgres installed
 
 
-
 backend commands:
 
 install nodemon: npm install -g nodemon

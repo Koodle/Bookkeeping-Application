@@ -9,9 +9,9 @@ import styles from "../styles/Home.module.css";
 //components
 import SideBar from "../components/Layout/SideBar";
 import DonutChart from "../components/Dashboard/DonutChart";
-import TransactonsTable from "../components/Dashboard/TransactionsTable";
-import BarChart from "../components/Dashboard/BarChart";
-import { LineChart } from "../components/Dashboard/LineChart";
+// import TransactonsTable from "../components/Dashboard/TransactionsTable";
+import BarChart from "../components/dashboard/BarChart";
+import { LineChart } from "../components/dashboard/LineChart";
 
 //FA
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";

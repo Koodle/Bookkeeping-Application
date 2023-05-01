@@ -26,5 +26,10 @@
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "bin": "index.js",
+  "pkg": {
+    "assets": ["node_modules/.prisma/client/"]
+  }
+  
 }

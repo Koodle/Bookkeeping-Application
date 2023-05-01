@@ -1,3 +1,5 @@
+"use client";
+
 import SideBar from "../../components/Layout/SideBar";
 import LedgersTable from "../../components/Ledgers/LedgersTable";
 import TAccounts from "../../components/Ledgers/TAccounts";
@@ -26,22 +28,15 @@ export default function Ledgers() {
     (state) => state.transactions.transactions
   );
 
-
   const [ledgers, setLedgers] = useState<any[]>(ledgersFromState);
   const [selectedAccounts, setSelectedAccounts] = useState<any[]>([]);
 
   const [searchBarText, setSearchBarText] = useState<any>("");
 
   useEffect(() => {
-    // AuthService.login({
-    //   //FIXME: get from the login page once built
-    //   email: "kazim@prisma.io",
-    //   password: "password",
-    // }).then((res) => {
-    //   // console.log(res.ledgers);
-    //   setLedgers(res.ledgers);
-    // });
-  }, []);
+    setLedgers(ledgersFromState)
+
+  }, [ledgersFromState, transactionsFromState]);
 
   return (
     <div>
@@ -216,7 +211,7 @@ export default function Ledgers() {
                                   </Link>
                                   </td>
                                   <td className="text-xs text-gray-900 font-light px-2 py-2 border-r">
-                                    {transaction.amount}
+                                    {parseFloat(transaction.amount).toFixed(2)}
                                   </td>
                                   <Link href={"/Journals/" + transaction.id}>
                                     <td className="px-2 pt-2">
@@ -300,7 +295,7 @@ export default function Ledgers() {
                                     </Link>
                                   </td>
                                   <td className="text-xs text-gray-900 font-light px-2 py-2 border-r ">
-                                    {transaction.amount}
+                                    {parseFloat(transaction.amount).toFixed(2)}
                                   </td>
                                   <Link href={"/Journals/" + transaction.id}>
                                     <td className="px-2 pt-2">

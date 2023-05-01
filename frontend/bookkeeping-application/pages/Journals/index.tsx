@@ -1,3 +1,5 @@
+"use client";
+
 import SideBar from "../../components/Layout/SideBar";
 
 //API
@@ -27,7 +29,10 @@ export default function Journals() {
 
   function getlatestRef(transactions: any){
     // console.log("ref");
-    // console.log(transactions.transactions.slice(-1)); 
+    console.log(transactions.transactions.slice(-1)); 
+    if(transactions.transactions.slice(-1).pop() === undefined){
+      return -1
+    }
     return transactions.transactions.slice(-1).pop().reference
   }
 
@@ -188,8 +193,8 @@ export default function Journals() {
                   >
                     {/* drop down options */}
                     {Object.values(transactionsFromState.ledgers).map((ledger: any)=>{
-                      // console.log("ledger");
-                      // console.log(ledger);
+                      console.log("ledger");
+                      console.log(ledger);
                       
                       return (
                         <option key={ledger.nominalAccount.code} value={ledger.nominalAccount.code}>{ledger.nominalAccount.accountName + " - " + ledger.nominalAccount.code}</option>

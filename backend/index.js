@@ -23,7 +23,7 @@ app.use(router);
 const port = config.appPort;
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Bookkeeping app listening on port ${port}`);
 });
 
 //create a server for Socket.IO to use

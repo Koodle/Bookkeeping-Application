@@ -53,23 +53,23 @@ const initialState = {
   ledgers: [],
 } as any;
 
-if (typeof window !== "undefined") {
-  console.log("trans from storage ", JSON.parse(localStorage.getItem("transactions") || '{}'));
+// if (typeof window !== "undefined") {
+//   console.log("trans from storage ", JSON.parse(localStorage.getItem("transactions") || '{}'));
 
-  let transactionsFromStorage = localStorage.hasOwnProperty("transactions") ? JSON.parse(localStorage.getItem("transactions") || '{}') : []
-  // initialState.ledgers = localStorage.hasOwnProperty("ledgers") ? JSON.parse(localStorage.getItem("ledgers") || '{}') : []
+//   let transactionsFromStorage = localStorage.hasOwnProperty("transactions") ? JSON.parse(localStorage.getItem("transactions") || '{}') : []
+//   // initialState.ledgers = localStorage.hasOwnProperty("ledgers") ? JSON.parse(localStorage.getItem("ledgers") || '{}') : []
 
-  if (!Array.isArray(transactionsFromStorage) && transactionsFromStorage.transactions){
-    initialState.transactions = transactionsFromStorage.transactions;
-  }
+//   if (!Array.isArray(transactionsFromStorage) && transactionsFromStorage.transactions){
+//     initialState.transactions = transactionsFromStorage.transactions;
+//   }
   
-  if (!Array.isArray(transactionsFromStorage) && transactionsFromStorage.ledgers){
-    initialState.ledgers = transactionsFromStorage.ledgers;
-    // console.log("ledgers from storage ",transactionsFromStorage.ledgers);
+//   if (!Array.isArray(transactionsFromStorage) && transactionsFromStorage.ledgers){
+//     initialState.ledgers = transactionsFromStorage.ledgers;
+//     // console.log("ledgers from storage ",transactionsFromStorage.ledgers);
     
-  }
+//   }
   
-}
+// }
 
 export const TransactionSlice = createSlice({
   name: "counter",
