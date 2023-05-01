@@ -62,3 +62,7 @@ To start in build mode:
 npm run build
 npm run start
 ```
+
+### Accessing the application
+
+In your browser navigate to ```http://localhost:3000/```
