@@ -3,7 +3,7 @@
 This web application will allow you to record bookkeeping transactions for your business.
 It uses Next.js with TypeScript, Express.js, Node.js and PostgreSQL.
 
-##Software Requirements
+## Software Requirements
 
 -Windows 10 operating system
 -PostgreSQL
@@ -22,6 +22,7 @@ npm install -g nodemon
 
 3. create a database in PostgreSQL
 4. Update the ```.env``` file with the new database information:
+
 Example:
 DATABASE_URL="postgresql://postgres:password@localhost:5432/bookkeeper?schema=public"
 APP_PORT=4000
@@ -39,21 +40,16 @@ npx prisma db seed
 ```
 
 7. navigate to ```\frontend\Bookkeeping-Application``` folder:
+```bash 
+npm install
+```
 
+## Starting The Application
 
-frontend -> npm run dev
-backend -> npm run start
-
-Files:
-(list all files)
-
-
-##Starting The Application
-
-### To start backend
+### To start the backend
 Either click on the executable file ```backend-win.exe``` OR navigate to ```\backend``` and type ```npm start```
 
-### To start frontend
+### To start the frontend
 
 Navigate to ```\frontend\Bookkeeping-Application``` folder:
 
@@ -67,29 +63,3 @@ To start in build mode:
 npm run build
 npm run start
 ```
-
-
-
-""""""""""""""""""
-Available commands:
-
-backend:
-npm start OR click on executable file (backend-win.exe)
-
-frontend:
--npm run dev: start dev version
-
--npm run build: create optimized build of application
--npm run start: start optimized build version
-""""""""""""""""""
-
-
-Use of Executable:
-(how the executable itself can be activated)
-
-Software Requirements:
-(details of the operating system required and any other programs that are required)
-
--Windows 10 operating system
--PostgreSQL
--Node.js V18.15.0
