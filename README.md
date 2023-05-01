@@ -25,9 +25,6 @@ npm install -g nodemon
 Example:
 ```bash 
 DATABASE_URL="postgresql://postgres:password@localhost:5432/bookkeeper?schema=public"
-APP_PORT=4000
-APP_URL=http@//127.0.0.1
-APP_KEY=b1183f932273abc7384235db29245393643b2b8eadd4d229e44567439e11488124af01b12d9b711a248852b36f775ba8928f00d75774d8e1d68239882600b530
 ```
 
 5. Migrate schemas from Prisma:
