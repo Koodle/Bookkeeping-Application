@@ -7,10 +7,12 @@ import AuthService from "../../services/authService";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { getTransactions } from "../../store/slices/transactionsSlice";
 
-import Link from "next/link";
+import { useRouter } from "next/router";
 
 
 export default function Ledgers() {
+  const router = useRouter();
+
   const userFromState = useAppSelector(
     (state) => state.authentication.user
   );
@@ -18,17 +20,19 @@ export default function Ledgers() {
     (state) => state.authentication.business
   );
 
-  // const [ledgers, setLedgers] = useState<any[]>(ledgersFromState);
-  // const [selectedAccounts, setSelectedAccounts] = useState<any[]>([]);
+  const [email, setEmail] = useState<any>("kazim@prizma.com");
+  const [password, setPassword] = useState<any>("password");
 
-    
-
+  function signIn(){
+    //navigate to transaction
+    router.push("/")
+  }
 
   return (
     <div>
 
       <div className=" box-border h-screen bg-gray-200 pt-12">
-{/* 
+      {/* 
         <div className="ml-6 mr-6">
           <h1 className="text-4xl font-bold text-center">Login</h1>
         </div> */}
@@ -42,17 +46,14 @@ export default function Ledgers() {
                         </h1>
                         <form className="space-y-4 md:space-y-6" action="#">
                             <div>
-                                <label className="block mb-2 text-sm font-medium text-gray-900">Your email</label>
-                                <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="kazim@prizma.com" required={true}></input>
+                                <label className="block mb-2 text-sm font-medium text-gray-900">Email</label>
+                                <input type="email" name="email" id="email" defaultValue="kazim@prizma.com" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required={true} onChange={(e)=>setEmail(e.target.value)}></input>
                             </div>
                             <div>
                                 <label className="block mb-2 text-sm font-medium text-gray-900">Password</label>
-                                <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required={true}></input>
+                                <input type="password" name="password" id="password" defaultValue="password" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required={true} onChange={(e)=>setPassword(e.target.value)}></input>
                             </div>
-                            <button type="submit" className="w-full text-gray-900">Sign in</button>
-                            <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                Don’t have an account yet? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
-                            </p>
+                            <button type="submit" className="w-full text-gray-900" onClick={() => signIn()}>Sign in</button>
                         </form>
                     </div>
                 </div>
