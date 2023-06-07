@@ -21,9 +21,6 @@ export default function DonutChart() {
   }
 
   Object.values(ledgers).map((ledger : any) => {
-
-    // console.log("ledger!");
-    // console.log(ledger);
     
     //calculate Balances:
     let debitBalance = 0;
@@ -40,14 +37,8 @@ export default function DonutChart() {
         creditBalance += parseFloat(transaction.amount);
       });
     }
-
-    // console.log("debit", debitBalance);
-    // console.log("credit", creditBalance);
     
     let balance = Math.abs(debitBalance - creditBalance);
-
-    // console.log("balance", balance);
-    // console.log(ledger.nominalAccount.groupName);
 
     //append values
     if (ledger.nominalAccount.groupName === "Current assets"){    
@@ -73,7 +64,6 @@ export default function DonutChart() {
     }
 
   })
-  // console.log(statements);
   
   const data = {
     labels: ["Revenue", "Liabilities", "Expenses", "Assets"],

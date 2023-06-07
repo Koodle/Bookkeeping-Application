@@ -29,32 +29,15 @@ import AuthService from "../services/authService";
 import { count, log } from "console";
 import { counter } from "@fortawesome/fontawesome-svg-core";
 
-//TODO: get data for year end, get data for charts & table, filter and searching.
-//TODO: improve ui for year end (billy)
-
 export default function Home() {
   const dispatch = useAppDispatch();
   const transactionsFromState = useAppSelector((state) => state.transactions);
 
-  // const [transactions, setTransactions] = useState<any[]>(
-  //   transactionsFromState
-  // );
-
   useEffect(() => {
-    // AuthService.login({
-    //   //FIXME: get from the login page once built
-    //   email: "kazim@prisma.io",
-    //   password: "password",
-    // }).then((res) => {
-    //   // console.log(res);
-    //   // setTransactions(res.transactions);
-    // });
-
     dispatch(login()).then(() => {
       dispatch(getTransactions());
       console.log("transactionsFromState: ", transactionsFromState);
     });
-
   }, []);
 
   return (
@@ -133,19 +116,7 @@ export default function Home() {
                                   "/" +
                                   date.getFullYear().toString()
                                 );
-                              };
-
-                              //find double entrys                            
-                              // let nominalAccountID = undefined
-                              // Object.values(transactionsFromState).forEach((transactionState: any) => {
-                              //   if (transactionState.id == transaction.id){
-                              //     nominalAccountID = transactionState.nominalAccountID
-                              //     return 
-                              //   }
-                              // })
-                              // console.log(nominalAccountID);
-                              // return nominalAccountID
-                              
+                              };                              
                               
                               return (
                                 <tr className="border-b" key={transaction.id} id={transaction.id}>
@@ -159,7 +130,6 @@ export default function Home() {
                                     {transaction.description}
                                   </td>
                                   <td className="text-xs text-gray-900 font-light px-2 py-2 border-r">
-                                    {/* TODO-DoubleEntry */}
                                     <Link href={"/Ledgers#" + transaction.doubleEntryID}>
                                     <td className="px-2 pt-2">
                                       {transaction.doubleEntryID}

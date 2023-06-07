@@ -100,8 +100,6 @@ export default function Ledgers() {
                       className="flex p-2 border"
                       key={ledger.nominalAccount.code}
                     >
-                      {/* FIXME: add sub headers for "each: group name" */}
-                      {/* <div className=""></div> */}
                       <div className="flex">
                         {ledger.nominalAccount.accountName}
                       </div>
@@ -120,11 +118,9 @@ export default function Ledgers() {
           </div>
 
           {/* TAccounts */}
-          {/* TODO:balance B/D needs to be implemented */}
           <div className="my-4 w-full overflow-y-scroll bg-white">
             {Object.values(ledgers).length > 0 ? (
               Object.values(ledgers).map((ledger) => {
-                //TODO: change visibility of ledgers based on Filter
 
                 return (
                   <div
@@ -143,7 +139,6 @@ export default function Ledgers() {
                     </div>
                     <div className=" bg-white flex">
                       <div className="flex flex-col w-1/2 overflow-hidden border-r-2 border-black">
-                        {/* <div className="text-center bg-teal-50">Dr</div> */}
                         <table className="border-t-4 text-center table-auto ">
                           <thead className="border-b">
                             <tr>
@@ -185,7 +180,6 @@ export default function Ledgers() {
                               let double_entry_reference = -1
                               Object.values(transactionsFromState).forEach((transactionState: any) => {
                                 if (transactionState.id == transaction.doubleEntryID){
-                                  // console.log(transactionState.reference);
                                   double_entry_reference = transactionState.reference
                                 }
                               })
@@ -203,7 +197,6 @@ export default function Ledgers() {
                                     {transaction.description}
                                   </td>
                                   <td className="text-xs text-gray-900 font-light px-2 py-2 border-r">
-                                    {/* TODO-DoubleEntry */}
                                     <Link href={"/Ledgers#" + transaction.doubleEntryID}>
                                     <td className="px-2 pt-2">
                                       {double_entry_reference}

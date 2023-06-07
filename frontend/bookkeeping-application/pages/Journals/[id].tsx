@@ -114,27 +114,10 @@ export default function Ledgers() {
     trans2 ? trans2.entryType === "Credit" ? 1 : 0 : 0
   );
 
-  // const [date2, setDate2] = useState<any>(new Date().toJSON().slice(0, 10));
-  // const [ref2, setRef2] = useState<any>(1);
-  // const [description2, setDescription2] = useState<any>();
-  // const [account2, setAccount2] = useState<any>("1000");
-  // const [amount2, setAmount2] = useState<any>();
-  // const [debit2, setDebit2] = useState<any>(0);
-  // const [credit2, setCredit2] = useState<any>(0);
-
   const dispatch = useAppDispatch();
 
   function submitJournals(id : any) {
     console.log("submit");
-
-    // console.log("id");
-    // console.log(id);
-    
-    
-
-    //When you hit submit you read each table row and add to an array of double entry or single entry transactions.
-
-    //TODO: validate data
 
     // create json object
     let transactions = {
@@ -160,11 +143,7 @@ export default function Ledgers() {
 
     console.log(transactions);
 
-    // dispatch(editTransactions(transactions)).then(() => {
-    // });
-
     //make api request
-
     TransactionsService.edit(
       transactions
     ).then((res) => {
@@ -374,12 +353,6 @@ export default function Ledgers() {
                       setAmount2(e.target.value);
                       setAmount1(e.target.value);
                     }}
-                    // disabled={
-                    //   credit2 != 0 && amount2 != "" && debit2 == 0
-                    //     ? true
-                    //     : false
-                    // }
-                    // defaultValue={debit2===1 ? amount2 : ""}
                     disabled={true}
                     value={ debit2==1 ? amount2 : ""}
                   />
@@ -394,12 +367,6 @@ export default function Ledgers() {
                       setCredit2(1);
                       setCredit1(0);
                     }}
-                    // disabled={
-                    //   credit2 == 0 && amount2 != "" && debit2 != 0
-                    //     ? true
-                    //     : false
-                    // }
-                    // defaultValue={credit2===1 ? amount2 : ""}
                     disabled={true}
                     value={ credit2==1 ? amount2 : ""}
                   />

@@ -7,23 +7,17 @@ exports.auth = (req, res, next) => {
 
   //check the requests header to find the JWT Bearer Token
   const authHeader = req.headers["authorization"];
-  // console.log("authheader");
-  // console.log(authHeader);
-
   let token = "";
 
   //if authHeader is not null -> grab the Bearer Token
   // const token = authHeader && authHeader.split(" ")[1];
   if (authHeader[0] == "B") {
-    // console.log("with bearer");
+    // with bearer
     token = authHeader.replace(/['"]+/g, "").slice(7);
   } else {
-    // console.log("without bearer");
+    // without bearer
     token = authHeader.replace(/['"]+/g, "");
   }
-
-  // console.log("token: ");
-  // console.log(token);
 
   //check for missing token
   if (!token) {

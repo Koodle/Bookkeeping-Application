@@ -26,23 +26,7 @@ export default function Ledgers() {
     (state) => state.transactions.ledgers
   );
 
-  // const [ledgers, setLedgers] = useState<any[]>(ledgersFromState);
-  // const [selectedAccounts, setSelectedAccounts] = useState<any[]>([]);
-
   useEffect(() => {
-    // console.log("ledgers from state");
-    // console.log(ledgersFromState);
-    // const generatePDF = () => {
-    //   const component = document.querySelector("#PL")!;
-    //   console.log(component);
-    //   const report = new jsPDF('portrait',"pt",'a4');
-    //   report.html(component).then(() => {
-    //       report.save('PL.pdf');
-    //   });
-    // }
-  
-    // generatePDF()
-    
   
   }, [ledgersFromState]);
 
@@ -57,13 +41,9 @@ export default function Ledgers() {
         <SideBar />
       </div>
 
-      {/* <div className="fixed ml-44 bg-orange-300">filters: date/YE, Download to excell or pdf</div> */}
-
       <div className="ml-44 box-border h-screen bg-gray-200 pl-4">
         
         <div className="mr-12 flex h-full space-x-4">
-        
-          
 
           <div className="my-4 w-full overflow-y-scroll bg-white px-2">
 
@@ -79,9 +59,6 @@ export default function Ledgers() {
                       
                       {Object.values(organizedLedgers.BS[subGroup]).length > 0 ? Object.values(organizedLedgers.BS[subGroup]).map(ledger => {
 
-                          // console.log(ledger);
-                          
-                        
                         return(
                           <div key={ledger.nominalAccount.id} className="flex">
                             <div className="w-1/2 border ">{ledger.nominalAccount.accountName}</div>
@@ -102,12 +79,6 @@ export default function Ledgers() {
                   )
                 })
               }
-
-      
-            {/* <div className="flex border-b-2 my-auto pt-4">
-              <h1 className="font-bold text-xl w-3/4">Equity</h1>
-              <div className="w-1/4 text-center"></div>
-            </div> */}
             
           </div>
 
@@ -125,9 +96,6 @@ export default function Ledgers() {
                       
                       {Object.values(organizedLedgers.PL[subGroup]).length > 0 ? Object.values(organizedLedgers.PL[subGroup]).map(ledger => {
 
-                          // console.log(ledger);
-                          
-                        
                         return(
                           <div key={ledger.nominalAccount.id} className="flex">
                             <div className="w-1/2 border ">{ledger.nominalAccount.accountName}</div>
@@ -148,11 +116,6 @@ export default function Ledgers() {
                   )
                 })
               }
-
-            {/* <Accordion title={"Income"} ledgers={organizedLedgers}></Accordion>
-            <Accordion title={"Cost of Sales"} ledgers={ledgersFromState}></Accordion>
-            <Accordion title={"Gross Profit"} ledgers={ledgersFromState}></Accordion>
-            <Accordion title={"Expenses"} ledgers={ledgersFromState}></Accordion> */}
       
             <div className="flex border-b-2 my-auto pt-8">
               <h1 className="font-bold text-xl w-3/4">{getTotalProfit(organizedLedgers.PL) <= 0 ? "Profit" : "Loss"}</h1>
@@ -174,7 +137,6 @@ function organizeLedgersByAccount(ledgersFromState : any){
     PL:{}
   }    
   for (const key in ledgersFromState) {
-    // console.log(`${key}: ${ledgersFromState[key]}`);
 
     //b/bd
     let balance = ledgerBalance(ledgersFromState[key])

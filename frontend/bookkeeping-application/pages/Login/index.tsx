@@ -32,11 +32,6 @@ export default function Ledgers() {
     <div>
 
       <div className=" box-border h-screen bg-gray-200 pt-12">
-      {/* 
-        <div className="ml-6 mr-6">
-          <h1 className="text-4xl font-bold text-center">Login</h1>
-        </div> */}
-
         <div className="ml-6 mr-6 h-fit">
             <div className="flex flex-col items-center justify-center ">
                 <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 ">

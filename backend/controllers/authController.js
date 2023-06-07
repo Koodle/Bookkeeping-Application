@@ -67,7 +67,6 @@ const generateToken = async (user) => {
   return { ...{ user }, ...{ token } };
 };
 
-//TODO: this should be done by date order, then will be shown in dashboard
 const appendTransactions = async (user) => {
   const transactions = await prisma.transactions.findMany({
     where: {

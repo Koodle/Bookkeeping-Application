@@ -56,7 +56,7 @@ export default function Journals() {
 
   function clearInputs(){
     setDate1(new Date().toJSON().slice(0, 10))
-    setRef1(ref1+2); //TODO: calculate this value
+    setRef1(ref1+2); 
     setDescription1("");
     setAccount1("1000");
     setAmount1("");
@@ -75,13 +75,6 @@ export default function Journals() {
 
   function submitJournals() {
     console.log("submit");
-
-    //When you hit submit you read each table row and add to an array of double entry or single entry transactions.
-
-    //TODO: validate data
-
-    // create json object
-
     let transactions = {
       data: [
         {
@@ -106,20 +99,12 @@ export default function Journals() {
     console.log(transactions);
 
     TransactionsService.create(
-      //FIXME: get from the login page once built
       transactions
     ).then((res) => {
       console.log(res);
       //update store 
       dispatch(getTransactions())
-
-      //show notification of success OR clear inputs
-      
-      //clear inputs
-      // clearInputs()
-
       console.log("transactionsFromState", transactionsFromState);
-
     });
   }
 
@@ -200,10 +185,6 @@ export default function Journals() {
                         <option key={ledger.nominalAccount.code} value={ledger.nominalAccount.code}>{ledger.nominalAccount.accountName + " - " + ledger.nominalAccount.code}</option>
                       )
                     })}
-                    {/* <option value="1000">Bank - 1000</option>
-                    <option value="3000">Capital - 3000</option>
-                    <option value="4400">Purchases - 4400</option>
-                    <option value="5020">Advertising - 5020</option> */}
                   </select>
                 </td>
                 <td className="px-2 py-2 text-gray-900 font-light border-r border-b">
@@ -277,18 +258,11 @@ export default function Journals() {
                     defaultValue={account2}
                   >
                     {/* drop down options */}
-                    {Object.values(transactionsFromState.ledgers).map((ledger: any)=>{
-                      // console.log("ledger");
-                      // console.log(ledger);
-                      
+                    {Object.values(transactionsFromState.ledgers).map((ledger: any)=>{                      
                       return (
                         <option key={ledger.nominalAccount.code} value={ledger.nominalAccount.code}>{ledger.nominalAccount.accountName + " - " + ledger.nominalAccount.code}</option>
                       )
                     })}
-                    {/* <option value="1000">Bank - 1000</option>
-                    <option value="3000">Capital - 3000</option>
-                    <option value="4400">Purchases - 4400</option>
-                    <option value="5020">Advertising - 5020</option> */}
                   </select>                
                 </td>
                 <td className="px-2 py-2 text-gray-900 font-light border-r border-b">
@@ -303,11 +277,6 @@ export default function Journals() {
                       setAmount2(e.target.value);
                       setAmount1(e.target.value);
                     }}
-                    // disabled={
-                    //   credit2 != 0 && amount2 != "" && debit2 == 0
-                    //     ? true
-                    //     : false
-                    // }
                     disabled={true}
                     value={ debit2==1 ? amount2 : ""}
                   />
@@ -322,11 +291,6 @@ export default function Journals() {
                       setCredit2(1);
                       setCredit1(0);
                     }}
-                    // disabled={
-                    //   credit2 == 0 && amount2 != "" && debit2 != 0
-                    //     ? true
-                    //     : false
-                    // }
                     disabled={true}
                     value={ credit2==1 ? amount2 : ""}
                   />

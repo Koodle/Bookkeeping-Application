@@ -16,24 +16,10 @@ exports.index = async (req, res) => {
 
 /*create a new transaction*/
 exports.create = async (req, res) => {
-  console.log("transactions/create");
-  console.log("req.body.data ", req.body.data);
-  // console.log(req.user);
   try {
     //loop through transactions array
     //save new transactions
     async function f() {
-
-      // let lastTrans = await prisma.transactions.findFirst({
-      //   take: -1,
-      //   where: {
-      //     userID: req.user.id
-      //   }
-      // });
-
-      console.log("inside f");
-
-
       let create = await prisma.transactions.createMany({
         data: [
           {
@@ -44,7 +30,6 @@ exports.create = async (req, res) => {
             amount: parseFloat(req.body.data[0].amount),
             userID: req.user.id,
             reference: req.body.data[0].reference,
-            // doubleEntryID: lastTrans.id + 2
           },
           {
             nominalAccountID: parseInt(req.body.data[1].nominalAccountID),
@@ -54,51 +39,14 @@ exports.create = async (req, res) => {
             amount: parseFloat(req.body.data[1].amount),
             userID: req.user.id,
             reference: req.body.data[1].reference,
-            // doubleEntryID: lastTrans.id + 2
           }
         ]
       })
-
-      // for (let index = 0; index < req.body.data.length; index++) {
-
-        // console.log("loop, " + index);
-
-      //   if (index === 0){
-      //     console.log("first trans");
-      //     let create = await prisma.transactions.create({
-      //       data: {
-      //         nominalAccountID: parseInt(transaction.nominalAccountID),
-      //         entryType: transaction.entryType,
-      //         transactionDate: new Date(transaction.transactionDate),
-      //         description: transaction.description,
-      //         amount: parseFloat(transaction.amount),
-      //         userID: req.user.id,
-      //         reference: transaction.reference,
-      //         // doubleEntryID: lastTrans.id + 2
-      //       }
-      //     })
-      //   }else {
-      //     console.log("second trans");
-      //     let create = await prisma.transactions.create({
-      //       data: {
-      //         nominalAccountID: parseInt(transaction.nominalAccountID),
-      //         entryType: transaction.entryType,
-      //         transactionDate: new Date(transaction.transactionDate),
-      //         description: transaction.description,
-      //         amount: parseFloat(transaction.amount),
-      //         userID: req.user.id,
-      //         reference: transaction.reference,
-      //         // doubleEntryID: lastTrans.id + 1
-      //       },
-      //     })
-      //   }
-      // }
-      // console.log("created!");
     }
 
     await f().then( async()=>{
 
-      console.log("update double entry ID");
+      //update double entry ID
 
       const trans1 = await prisma.transactions.findFirst({
         take: -1,
@@ -161,23 +109,14 @@ exports.create = async (req, res) => {
 exports.deleteTransactions = async (req, res) => {
   console.log("transactions/delete");
   try {
-    console.log(req.body.transactions);
-    console.log(req.user);
 
     req.body.transactions.forEach(async (element) => {
       const deleteTransaction = await prisma.transactions.delete({
         where: {
           id: element.id,
-          // userID: req.user.id,
         },
       });
     });
-
-    //TODO:
-    //1) find both transactions where the userID is same as that taken from token & transaction ID matches the one sent
-    //2) find the second transaction, Do same checks as step 1, but also check their double entry values to see if they match.
-
-    //FIXME: transactions and ledgers are not updated need to use .then(), if i call get transactions they are deleted
 
     //append transactions
     let transactions = await getTransactions(req.user.id);
@@ -186,7 +125,6 @@ exports.deleteTransactions = async (req, res) => {
     let ledgers = await getLedgers(req.user.id);
 
     res.send({ transactions: transactions, ledgers: ledgers });
-    // res.send("success")
   } catch (e) {
     return res.status(500).json({ status: "Error", message: e.message });
   }
@@ -197,9 +135,7 @@ exports.editTransactions = async (req, res) => {
   console.log("transactions/edit");
   
   try {
-    console.log(req.body.transactions);
-    // console.log(req.user);
-
+    
     async function f() {
       await req.body.transactions.forEach(async (element) => {
 
@@ -207,15 +143,7 @@ exports.editTransactions = async (req, res) => {
         elementWithoutID = {...element}
         delete elementWithoutID["id"]
         delete elementWithoutID["userID"]
-    
-        // //correct date format
-        // elementWithoutID["transactionDate"] = new Date(element.transactionDate)
-
-        // //parse float for amount
-        // elementWithoutID["amount"] = parseFloat(element.amount)
-
-        console.log(elementWithoutID);
-
+  
         const updateTransaction = await prisma.transactions.update({
           where: {
             id: element.id
@@ -244,15 +172,7 @@ exports.editTransactions = async (req, res) => {
   }
 };
 
-//TODO: this should be done by date order, then will be shown in dashboard
 const getTransactions = async (id) => {
-  // const transactions = await prisma.transactions.findMany({
-  //   where: {
-  //     userID: id,
-  //   },
-  // });
-  // return transactions;
-
   const transactions = await prisma.transactions.findMany({
     orderBy: [
       {
