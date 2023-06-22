@@ -1,33 +1,24 @@
 "use client";
 
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
-import { Inter } from "@next/font/google";
-import styles from "../styles/Home.module.css";
 
 //components
-import SideBar from "../components/Layout/SideBar";
 import DonutChart from "../components/Dashboard/DonutChart";
+import SideBar from "../components/Layout/SideBar";
 // import TransactonsTable from "../components/Dashboard/TransactionsTable";
 import BarChart from "../components/dashboard/BarChart";
 import { LineChart } from "../components/dashboard/LineChart";
 
 //FA
-import { faCoffee } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 //redux
-import { useAppSelector, useAppDispatch } from "../store/hooks";
-import { getTransactions } from "../store/slices/transactionsSlice";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { login } from "../store/slices/authSlice";
+import { getTransactions } from "../store/slices/transactionsSlice";
 
 //API
-import axios from "axios";
-import { useEffect, useState } from "react";
-import AuthService from "../services/authService";
-import { count, log } from "console";
-import { counter } from "@fortawesome/fontawesome-svg-core";
+import { useEffect } from "react";
 
 export default function Home() {
   const dispatch = useAppDispatch();

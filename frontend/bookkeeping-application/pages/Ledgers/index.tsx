@@ -1,23 +1,17 @@
 "use client";
 
 import SideBar from "../../components/Layout/SideBar";
-import LedgersTable from "../../components/Ledgers/LedgersTable";
-import TAccounts from "../../components/Ledgers/TAccounts";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 //API
-import axios from "axios";
 import { useEffect, useState } from "react";
-import AuthService from "../../services/authService";
 
 //redux
-import { useAppSelector, useAppDispatch } from "../../store/hooks";
-import { getTransactions } from "../../store/slices/transactionsSlice";
+import { useAppSelector } from "../../store/hooks";
 
 import Link from "next/link";
-import { log } from "console";
 
 export default function Ledgers() {
   const ledgersFromState = useAppSelector(

@@ -1,11 +1,8 @@
 //API
-import axios from "axios";
-import { useEffect, useState } from "react";
-import AuthService from "../../services/authService";
+import { useState } from "react";
 
 //redux
-import { useAppSelector, useAppDispatch } from "../../store/hooks";
-import { getTransactions } from "../../store/slices/transactionsSlice";
+import { useAppSelector } from "../../store/hooks";
 
 import { useRouter } from "next/router";
 

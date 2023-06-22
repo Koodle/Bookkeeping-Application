@@ -3,16 +3,13 @@
 import SideBar from "../../components/Layout/SideBar";
 
 //API
-import axios from "axios";
 import { useEffect, useState } from "react";
 import TransactionsService from "../../services/transactionsService";
 
-import Link from "next/link";
-import { log } from "console";
 
 //redux
-import { useAppSelector, useAppDispatch } from "../../store/hooks";
-import { editTransactions, getTransactions } from "../../store/slices/transactionsSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { getTransactions } from "../../store/slices/transactionsSlice";
 
 export default function Journals() {
   //TODO: form validation
