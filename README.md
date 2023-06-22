@@ -4,11 +4,43 @@ This web application will allow you to record bookkeeping transactions for your 
 
 It uses Next.js with TypeScript, Express.js, Node.js and PostgreSQL.
 
+1) [Demo](#demo)
+2) [Installation](#installation)
+
+<a name="demo"/>
+
+# Demo
+
+### Dashboard
+![Dashboard](https://github.com/Koodle/Bookkeeping-Application/blob/main/demoImages/Dashboard.png)
+
+### Ledgers
+![Ledgers](https://github.com/Koodle/Bookkeeping-Application/blob/main/demoImages/Ledgers.png)
+
+### Reports
+![Reports](https://github.com/Koodle/Bookkeeping-Application/blob/main/demoImages/Reports.png)
+
+### Journals Add
+![JournalsAdd](https://github.com/Koodle/Bookkeeping-Application/blob/main/demoImages/AddJournals.png)
+
+### Journals Edit
+![JournalsEdit](https://github.com/Koodle/Bookkeeping-Application/blob/main/demoImages/EditJournals.png)
+
+### User Info
+![UserInfo](https://github.com/Koodle/Bookkeeping-Application/blob/main/demoImages/UserInfo.png)
+
+### Login
+![Login](https://github.com/Koodle/Bookkeeping-Application/blob/main/demoImages/Login.png)
+
+<a name="installation"/>
+
+# Installation
+
 ## Software Requirements
 
-Windows 10 operating system, PostgreSQL, Node.js V18.15.0
+Windows 10 operating system, PostgreSQL 15, Node.js V18.15.0
 
-## Installation
+## Method
 
 1. Clone the repository
 2. Navigate to ```\backend``` folder:
