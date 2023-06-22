@@ -1,0 +1,208 @@
+{
+	"info": {
+		"_postman_id": "9bda7cf7-7559-4653-83c0-b06180f39a6e",
+		"name": "Bookkeeper",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12276433",
+		"_collection_link": "https://grey-meadow-372548.postman.co/workspace/PDD-Hackathon-2022~ccb03244-2333-418f-b556-e805c19ed4b1/collection/12276433-9bda7cf7-7559-4653-83c0-b06180f39a6e?action=share&creator=12276433&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"email\": \"kazim@prisma.io\", \r\n    \"password\": \"password\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:4000/login",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "4000",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ledger Requests",
+			"item": [
+				{
+					"name": "Delete transaction",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{user1JWT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"transactions\": [\r\n        {\r\n            \"id\": 2\r\n        },\r\n        {\r\n            \"id\": 3\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:4000/transactions/delete",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "4000",
+							"path": [
+								"transactions",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Transactions",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{user1JWT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"transactions\":[\r\n    {\r\n        \"id\": 1,\r\n        \"reference\": 1,\r\n        \"nominalAccountID\": 1000,\r\n        \"entryType\": \"Debit\",\r\n        \"transactionDate\": \"2022-01-01T00:00:00.000Z\",\r\n        \"description\": \"3000 Captial for business account\",\r\n        \"amount\": \"3000\",\r\n        \"userID\": 1,\r\n        \"doubleEntryID\": 2\r\n    },\r\n    {\r\n        \"id\": 2,\r\n        \"reference\": 2,\r\n        \"nominalAccountID\": 3000,\r\n        \"entryType\": \"Credit\",\r\n        \"transactionDate\": \"2022-01-01T00:00:00.000Z\",\r\n        \"description\": \"£3000 Capital for business account\",\r\n        \"amount\": \"3000\",\r\n        \"userID\": 1,\r\n        \"doubleEntryID\": 1\r\n    }]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:4000/transactions/edit",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "4000",
+							"path": [
+								"transactions",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Transactions",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{user1JWT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:4000/transactions",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "4000",
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create many transactions",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{user1JWT}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": [\r\n        {\r\n            \"nominalAccountID\": 4400,\r\n            \"entryType\": \"Debit\",\r\n            \"transactionDate\": \"2022-01-03\",\r\n            \"description\": \"purchase of product\",\r\n            \"amount\": 15.0,\r\n            \"reference\": 221\r\n        },\r\n        {\r\n            \"nominalAccountID\": 1000,\r\n            \"entryType\": \"Credit\",\r\n            \"transactionDate\": \"2022-01-03\",\r\n            \"description\": \"purchase of product\",\r\n            \"amount\": 15.0,\r\n            \"reference\": 222\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:4000/transactions/create",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "4000",
+							"path": [
+								"transactions",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
