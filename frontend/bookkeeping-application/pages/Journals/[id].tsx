@@ -1,18 +1,16 @@
 "use client";
 
+//components
 import SideBar from "../../components/Layout/SideBar";
 
-//API
+//hooks
 import { useState } from "react";
 import TransactionsService from "../../services/transactionsService";
+import { useRouter } from "next/router";
 
 //redux
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { getTransactions } from "../../store/slices/transactionsSlice";
-
-//router
-import { useRouter } from "next/router";
-
 
 function findTransactionsFromID(id: any, transactions: any) {
   let Id = parseInt(id);
@@ -21,9 +19,6 @@ function findTransactionsFromID(id: any, transactions: any) {
   let trans2: any = null;
 
   transactions.forEach((element: any) => {
-    // console.log("element id type ", typeof element.id);
-    // console.log("id ", typeof id);
-
     if (element.id === Id) {
       console.log("tranaction 1: ", element);
       trans1 = element;

@@ -4,22 +4,6 @@ import type { RootState } from "../store";
 //services
 import TransactionsService from "../../services/transactionsService";
 
-// Define a type for the slice state
-// interface CounterState {
-//   value: number;
-//  transactions: [] any
-// }
-
-// Define the initial state using that type
-// const initialState: CounterState = {
-//   value: 0,
-// };
-
-// // Workaround: cast state instead of declaring variable type
-// const initialState = {
-//   value: 0
-// } as CounterState
-
 export const getTransactions = createAsyncThunk(
   "transactions",
   async () => {
@@ -48,32 +32,18 @@ export const deleteTransactions = createAsyncThunk(
   }
 );
 
-const initialState = {
+interface TransactionState {
   transactions: [],
   ledgers: [],
-} as any;
+}
 
-// if (typeof window !== "undefined") {
-//   console.log("trans from storage ", JSON.parse(localStorage.getItem("transactions") || '{}'));
-
-//   let transactionsFromStorage = localStorage.hasOwnProperty("transactions") ? JSON.parse(localStorage.getItem("transactions") || '{}') : []
-//   // initialState.ledgers = localStorage.hasOwnProperty("ledgers") ? JSON.parse(localStorage.getItem("ledgers") || '{}') : []
-
-//   if (!Array.isArray(transactionsFromStorage) && transactionsFromStorage.transactions){
-//     initialState.transactions = transactionsFromStorage.transactions;
-//   }
-  
-//   if (!Array.isArray(transactionsFromStorage) && transactionsFromStorage.ledgers){
-//     initialState.ledgers = transactionsFromStorage.ledgers;
-//     // console.log("ledgers from storage ",transactionsFromStorage.ledgers);
-    
-//   }
-  
-// }
+const initialState: TransactionState = {
+  transactions: [],
+  ledgers: [],
+}
 
 export const TransactionSlice = createSlice({
   name: "counter",
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -107,8 +77,3 @@ export const TransactionSlice = createSlice({
 export default TransactionSlice.reducer;
 
 export const {} = TransactionSlice.actions;
-
-// // Other code such as selectors can use the imported `RootState` type
-// export const selectCount = (state: RootState) => state.counter.value;
-
-// export default counterSlice.reducer;

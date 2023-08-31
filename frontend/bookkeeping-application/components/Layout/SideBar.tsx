@@ -12,7 +12,7 @@ export default function SideBar() {
     <div className="fixed top-0 left-0 h-screen w-44 flex flex-col text-white shadow-lg bg-cyan-600">
       {/* <div className="pt-4 pb-4 text-center bg-black">Bookkeeper</div> */}
       <div className="mt-2 pt-2 pb-2 text-center">
-        <Link href="/">Dashboard</Link>
+        <Link href="/Dashboard">Dashboard</Link>
       </div>
       <div className="pt-2 pb-2 text-center">
         <Link href="/Journals">Journals</Link>

@@ -1,35 +1,31 @@
 "use client";
 
+//Hooks
+import { useEffect, useState } from "react";
 import SideBar from "../../components/Layout/SideBar";
+import Link from "next/link";
 
+//Font Awesome
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-//API
-import { useEffect, useState } from "react";
-
 //redux
 import { useAppSelector } from "../../store/hooks";
-
-import Link from "next/link";
 
 export default function Ledgers() {
   const ledgersFromState = useAppSelector(
     (state) => state.transactions.ledgers
   );
-
   const transactionsFromState = useAppSelector(
     (state) => state.transactions.transactions
   );
 
   const [ledgers, setLedgers] = useState<any[]>(ledgersFromState);
   const [selectedAccounts, setSelectedAccounts] = useState<any[]>([]);
-
   const [searchBarText, setSearchBarText] = useState<any>("");
 
   useEffect(() => {
     setLedgers(ledgersFromState)
-
   }, [ledgersFromState, transactionsFromState]);
 
   return (

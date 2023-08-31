@@ -1,31 +1,19 @@
+//components
 import SideBar from "../../components/Layout/SideBar";
-// import LedgersTable from "../../components/Ledgers/LedgersTable";
-// import TAccounts from "../../components/Ledgers/TAccounts";
 
-
-//API
+//Hooks
 import { useEffect } from "react";
 
 //redux
 import { useAppSelector } from "../../store/hooks";
-
-
-//PDF
 
 export default function Ledgers() {
   const ledgersFromState = useAppSelector(
     (state) => state.transactions.ledgers
   );
 
-  useEffect(() => {
-  
-  }, [ledgersFromState]);
-
   let organizedLedgers = organizeLedgersByAccount(ledgersFromState)
     
-
-
-
   return (
     <div>
       <div className="flex">

@@ -1,37 +1,32 @@
 "use client";
 
+//components
 import SideBar from "../../components/Layout/SideBar";
 
 //API
 import { useEffect, useState } from "react";
 import TransactionsService from "../../services/transactionsService";
 
-
 //redux
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { getTransactions } from "../../store/slices/transactionsSlice";
 
 export default function Journals() {
-  //TODO: form validation
-
+  const dispatch = useAppDispatch();
   const transactionsFromState = useAppSelector((state: any) => state.transactions);
 
-  useEffect(() => {
-
-    setRef1(getlatestRef(transactionsFromState)+1)
-    setRef2(getlatestRef(transactionsFromState)+2)
-
-
-  }, [transactionsFromState]);
-
   function getlatestRef(transactions: any){
-    // console.log("ref");
     console.log(transactions.transactions.slice(-1)); 
     if(transactions.transactions.slice(-1).pop() === undefined){
       return -1
     }
     return transactions.transactions.slice(-1).pop().reference
   }
+
+  useEffect(() => {
+    setRef1(getlatestRef(transactionsFromState)+1)
+    setRef2(getlatestRef(transactionsFromState)+2)
+  }, [transactionsFromState]);
 
   const [date1, setDate1] = useState<any>(new Date().toJSON().slice(0, 10));
   const [ref1, setRef1] = useState<any>(transactionsFromState != null ? getlatestRef(transactionsFromState)+1 : -20); //TODO: calculate this value
@@ -48,8 +43,6 @@ export default function Journals() {
   const [amount2, setAmount2] = useState<any>();
   const [debit2, setDebit2] = useState<any>(0);
   const [credit2, setCredit2] = useState<any>(0);
-
-  const dispatch = useAppDispatch();
 
   function clearInputs(){
     setDate1(new Date().toJSON().slice(0, 10))
@@ -102,6 +95,7 @@ export default function Journals() {
       //update store 
       dispatch(getTransactions())
       console.log("transactionsFromState", transactionsFromState);
+      clearInputs()
     });
   }
 

@@ -1,11 +1,8 @@
+//Components
 import SideBar from "../../components/Layout/SideBar";
-
-
-//API
 
 //redux
 import { useAppSelector } from "../../store/hooks";
-
 
 export default function Ledgers() {
   const userFromState = useAppSelector(
@@ -14,9 +11,6 @@ export default function Ledgers() {
   const businessFromState = useAppSelector(
     (state) => state.authentication.business
   );
-
-  console.log(businessFromState);
-  
 
   return (
     <div>
