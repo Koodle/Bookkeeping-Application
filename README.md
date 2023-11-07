@@ -3,6 +3,7 @@
 This web application will allow you to record bookkeeping transactions for your business.
 
 Frontend: Next.js (TypeScript), Redux.js, Tailwind.css 
+
 Backend: Node.js Express.js, Prisma ORM (PostgreSQL)
 
 1) [Demo](#demo)
