@@ -20,12 +20,6 @@ This web application will allow you to record bookkeeping transactions for your 
 
 Please read the [Software_Cover_Sheet.pdf](Software_Cover_Sheet.pdf) which covers the Design & Implementation, Testing, Project Structure and Critical Appraisal
 
-<a name="dissertation"/>
-
-# Dissertation
-
-Please read the Dissertation.pdf file to gain an in depth insight into the project
-
 <a name="demo"/>
 
 # Demo
