@@ -5,6 +5,7 @@ This web application will allow you to record bookkeeping transactions for your 
 1) [Built With](#builtwith)
 2) [Demo](#demo)
 3) [Installation](#installation)
+4) [Dissertation](#dissertation)
 
 <a name="builtwith"/>
 
@@ -12,6 +13,18 @@ This web application will allow you to record bookkeeping transactions for your 
 
 * Frontend: Next.js (TypeScript), Redux.js, Tailwind.css
 * Backend: Node.js Express.js, Prisma ORM (PostgreSQL), JSON Webtokens
+
+<a name="coversheet"/>
+
+# Code Review Coversheet
+
+Please read the Coversheet.pdf file to gain a general outline of the project.
+
+<a name="dissertation"/>
+
+# Dissertation
+
+Please read the Dissertation.pdf file to gain an in depth insight into the project
 
 <a name="demo"/>
 
