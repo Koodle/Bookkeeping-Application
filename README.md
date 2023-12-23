@@ -3,9 +3,9 @@
 This web application will allow you to record bookkeeping transactions for your business.
 
 1) [Built With](#builtwith)
-2) [Demo](#demo)
-3) [Installation](#installation)
-4) [Dissertation](#dissertation)
+2) [Cover Sheet](#coversheet)
+3) [Demo](#demo)
+4) [Installation](#installation)
 
 <a name="builtwith"/>
 
@@ -18,7 +18,7 @@ This web application will allow you to record bookkeeping transactions for your 
 
 # Code Review Coversheet
 
-Please read the Coversheet.pdf file to gain a general outline of the project.
+Please read the [a relative link](Software Coversheet.pdf) Software Coversheet.pdf which covers the Design & Implementation, Testing, Project Structure and Critical Appraisal
 
 <a name="dissertation"/>
 
