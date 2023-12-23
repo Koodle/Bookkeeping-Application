@@ -18,7 +18,7 @@ This web application will allow you to record bookkeeping transactions for your 
 
 # Code Review Coversheet
 
-[Software CoverSheet](Software Cover Sheet.pdf)
+[Software CoverSheet](Software_Cover_Sheet.pdf)
 
 Please read the Software Coversheet.pdf which covers the Design & Implementation, Testing, Project Structure and Critical Appraisal
 
